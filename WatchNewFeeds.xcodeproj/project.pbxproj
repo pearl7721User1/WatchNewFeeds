@@ -13,7 +13,23 @@
 		EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16521F2AE6200396729 /* WatchNewFeeds.xcdatamodeld */; };
 		EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16821F2AE6200396729 /* Assets.xcassets */; };
 		EE1FD16C21F2AE6200396729 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16A21F2AE6200396729 /* LaunchScreen.storyboard */; };
+		EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE63987B21F2F49500846F5C /* CoreDataStack.swift */; };
+		EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */; };
+		EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */; };
+		EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */; };
+		EEB7EBB721F40D4300D307CF /* Show+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */; };
+		EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB421F40D4300D307CF /* Show+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EE91EB6F21F365E800E12191 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE1FD15321F2AE6100396729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE1FD15A21F2AE6200396729;
+			remoteInfo = WatchNewFeeds;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,10 +40,25 @@
 		EE1FD16821F2AE6200396729 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE1FD16B21F2AE6200396729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE1FD16D21F2AE6200396729 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE63987B21F2F49500846F5C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchNewFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchNewFeedsTests.swift; sourceTree = "<group>"; };
+		EE91EB6E21F365E800E12191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Episode+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Episode+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EEB7EBB421F40D4300D307CF /* Show+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EE1FD15821F2AE6200396729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE91EB6721F365E800E12191 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,7 +71,12 @@
 		EE1FD15221F2AE6100396729 = {
 			isa = PBXGroup;
 			children = (
+				EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */,
+				EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */,
+				EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */,
+				EEB7EBB421F40D4300D307CF /* Show+CoreDataProperties.swift */,
 				EE1FD15D21F2AE6200396729 /* WatchNewFeeds */,
+				EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */,
 				EE1FD15C21F2AE6200396729 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */,
+				EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				EE1FD15E21F2AE6200396729 /* AppDelegate.swift */,
+				EE63987B21F2F49500846F5C /* CoreDataStack.swift */,
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
 				EE1FD16221F2AE6200396729 /* Main.storyboard */,
 				EE1FD16821F2AE6200396729 /* Assets.xcassets */,
@@ -65,6 +103,15 @@
 				EE1FD16521F2AE6200396729 /* WatchNewFeeds.xcdatamodeld */,
 			);
 			path = WatchNewFeeds;
+			sourceTree = "<group>";
+		};
+		EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */ = {
+			isa = PBXGroup;
+			children = (
+				EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */,
+				EE91EB6E21F365E800E12191 /* Info.plist */,
+			);
+			path = WatchNewFeedsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -87,6 +134,24 @@
 			productReference = EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EE91EB6921F365E800E12191 /* WatchNewFeedsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE91EB7121F365E800E12191 /* Build configuration list for PBXNativeTarget "WatchNewFeedsTests" */;
+			buildPhases = (
+				EE91EB6621F365E800E12191 /* Sources */,
+				EE91EB6721F365E800E12191 /* Frameworks */,
+				EE91EB6821F365E800E12191 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE91EB7021F365E800E12191 /* PBXTargetDependency */,
+			);
+			name = WatchNewFeedsTests;
+			productName = WatchNewFeedsTests;
+			productReference = EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -100,6 +165,11 @@
 					EE1FD15A21F2AE6200396729 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+					};
+					EE91EB6921F365E800E12191 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EE1FD15A21F2AE6200396729;
 					};
 				};
 			};
@@ -117,6 +187,7 @@
 			projectRoot = "";
 			targets = (
 				EE1FD15A21F2AE6200396729 /* WatchNewFeeds */,
+				EE91EB6921F365E800E12191 /* WatchNewFeedsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -132,6 +203,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EE91EB6821F365E800E12191 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -139,13 +217,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEB7EBB721F40D4300D307CF /* Show+CoreDataClass.swift in Sources */,
+				EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */,
 				EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */,
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
+				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
 				EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */,
+				EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */,
+				EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE91EB6621F365E800E12191 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EE91EB7021F365E800E12191 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EE1FD15A21F2AE6200396729 /* WatchNewFeeds */;
+			targetProxy = EE91EB6F21F365E800E12191 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EE1FD16221F2AE6200396729 /* Main.storyboard */ = {
@@ -281,6 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSJUN2G6D;
 				INFOPLIST_FILE = WatchNewFeeds/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = softv.WatchNewFeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -296,11 +396,44 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSJUN2G6D;
 				INFOPLIST_FILE = WatchNewFeeds/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = softv.WatchNewFeeds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EE91EB7221F365E800E12191 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8LSJUN2G6D;
+				INFOPLIST_FILE = WatchNewFeedsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = softv.WatchNewFeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchNewFeeds.app/WatchNewFeeds";
+			};
+			name = Debug;
+		};
+		EE91EB7321F365E800E12191 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8LSJUN2G6D;
+				INFOPLIST_FILE = WatchNewFeedsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = softv.WatchNewFeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchNewFeeds.app/WatchNewFeeds";
 			};
 			name = Release;
 		};
@@ -321,6 +454,15 @@
 			buildConfigurations = (
 				EE1FD17121F2AE6200396729 /* Debug */,
 				EE1FD17221F2AE6200396729 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE91EB7121F365E800E12191 /* Build configuration list for PBXNativeTarget "WatchNewFeedsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE91EB7221F365E800E12191 /* Debug */,
+				EE91EB7321F365E800E12191 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
