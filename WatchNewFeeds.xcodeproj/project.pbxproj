@@ -14,6 +14,10 @@
 		EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16821F2AE6200396729 /* Assets.xcassets */; };
 		EE1FD16C21F2AE6200396729 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16A21F2AE6200396729 /* LaunchScreen.storyboard */; };
 		EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE63987B21F2F49500846F5C /* CoreDataStack.swift */; };
+		EE877532221D923D0071025D /* EpisodePuller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE87752F221D923D0071025D /* EpisodePuller.swift */; };
+		EE877533221D923D0071025D /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877530221D923D0071025D /* SyncManager.swift */; };
+		EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877531221D923D0071025D /* EpisodeComparator.swift */; };
+		EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877537221D927B0071025D /* SyncManagerTests.swift */; };
 		EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */; };
 		EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */; };
 		EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */; };
@@ -41,6 +45,10 @@
 		EE1FD16B21F2AE6200396729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE1FD16D21F2AE6200396729 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE63987B21F2F49500846F5C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		EE87752F221D923D0071025D /* EpisodePuller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodePuller.swift; path = WatchNewFeeds/SyncManager/EpisodePuller.swift; sourceTree = SOURCE_ROOT; };
+		EE877530221D923D0071025D /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManager.swift; path = WatchNewFeeds/SyncManager/SyncManager.swift; sourceTree = SOURCE_ROOT; };
+		EE877531221D923D0071025D /* EpisodeComparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodeComparator.swift; path = WatchNewFeeds/SyncManager/EpisodeComparator.swift; sourceTree = SOURCE_ROOT; };
+		EE877537221D927B0071025D /* SyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTests.swift; sourceTree = "<group>"; };
 		EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchNewFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchNewFeedsTests.swift; sourceTree = "<group>"; };
 		EE91EB6E21F365E800E12191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +101,7 @@
 		EE1FD15D21F2AE6200396729 /* WatchNewFeeds */ = {
 			isa = PBXGroup;
 			children = (
+				EE87752E221D92010071025D /* SyncManager */,
 				EE1FD15E21F2AE6200396729 /* AppDelegate.swift */,
 				EE63987B21F2F49500846F5C /* CoreDataStack.swift */,
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
@@ -105,10 +114,22 @@
 			path = WatchNewFeeds;
 			sourceTree = "<group>";
 		};
+		EE87752E221D92010071025D /* SyncManager */ = {
+			isa = PBXGroup;
+			children = (
+				EE877531221D923D0071025D /* EpisodeComparator.swift */,
+				EE87752F221D923D0071025D /* EpisodePuller.swift */,
+				EE877530221D923D0071025D /* SyncManager.swift */,
+			);
+			name = SyncManager;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */ = {
 			isa = PBXGroup;
 			children = (
 				EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */,
+				EE877537221D927B0071025D /* SyncManagerTests.swift */,
 				EE91EB6E21F365E800E12191 /* Info.plist */,
 			);
 			path = WatchNewFeedsTests;
@@ -222,7 +243,10 @@
 				EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */,
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
 				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
+				EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */,
 				EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */,
+				EE877533221D923D0071025D /* SyncManager.swift in Sources */,
+				EE877532221D923D0071025D /* EpisodePuller.swift in Sources */,
 				EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */,
 				EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */,
 			);
@@ -232,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */,
 				EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
