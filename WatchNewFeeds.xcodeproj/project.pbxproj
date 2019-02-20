@@ -18,6 +18,7 @@
 		EE877533221D923D0071025D /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877530221D923D0071025D /* SyncManager.swift */; };
 		EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877531221D923D0071025D /* EpisodeComparator.swift */; };
 		EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877537221D927B0071025D /* SyncManagerTests.swift */; };
+		EE87753B221D945A0071025D /* FeedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE87753A221D945A0071025D /* FeedKit.framework */; };
 		EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */; };
 		EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */; };
 		EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */; };
@@ -49,6 +50,7 @@
 		EE877530221D923D0071025D /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManager.swift; path = WatchNewFeeds/SyncManager/SyncManager.swift; sourceTree = SOURCE_ROOT; };
 		EE877531221D923D0071025D /* EpisodeComparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodeComparator.swift; path = WatchNewFeeds/SyncManager/EpisodeComparator.swift; sourceTree = SOURCE_ROOT; };
 		EE877537221D927B0071025D /* SyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTests.swift; sourceTree = "<group>"; };
+		EE87753A221D945A0071025D /* FeedKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FeedKit.framework; path = Carthage/Build/iOS/FeedKit.framework; sourceTree = "<group>"; };
 		EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchNewFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchNewFeedsTests.swift; sourceTree = "<group>"; };
 		EE91EB6E21F365E800E12191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE87753B221D945A0071025D /* FeedKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,7 @@
 				EE1FD15D21F2AE6200396729 /* WatchNewFeeds */,
 				EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */,
 				EE1FD15C21F2AE6200396729 /* Products */,
+				EE877539221D945A0071025D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +127,14 @@
 			);
 			name = SyncManager;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		EE877539221D945A0071025D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE87753A221D945A0071025D /* FeedKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */ = {
@@ -404,6 +416,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSJUN2G6D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = WatchNewFeeds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -420,6 +436,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8LSJUN2G6D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = WatchNewFeeds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
