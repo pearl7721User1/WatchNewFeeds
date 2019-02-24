@@ -13,6 +13,9 @@
 		EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16521F2AE6200396729 /* WatchNewFeeds.xcdatamodeld */; };
 		EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16821F2AE6200396729 /* Assets.xcassets */; };
 		EE1FD16C21F2AE6200396729 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16A21F2AE6200396729 /* LaunchScreen.storyboard */; };
+		EE20F9772220343E0006225D /* EpisodeFetchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9762220343E0006225D /* EpisodeFetchOperation.swift */; };
+		EE20F979222034560006225D /* EpisodeFeedPullOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F978222034560006225D /* EpisodeFeedPullOperation.swift */; };
+		EE20F97F2220F00F0006225D /* FeedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE87753A221D945A0071025D /* FeedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE63987B21F2F49500846F5C /* CoreDataStack.swift */; };
 		EE877532221D923D0071025D /* EpisodePuller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE87752F221D923D0071025D /* EpisodePuller.swift */; };
 		EE877533221D923D0071025D /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877530221D923D0071025D /* SyncManager.swift */; };
@@ -36,6 +39,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EE20F9802220F00F0006225D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE20F97F2220F00F0006225D /* FeedKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1FD15E21F2AE6200396729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,10 +62,12 @@
 		EE1FD16821F2AE6200396729 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE1FD16B21F2AE6200396729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE1FD16D21F2AE6200396729 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE20F9762220343E0006225D /* EpisodeFetchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeFetchOperation.swift; sourceTree = "<group>"; };
+		EE20F978222034560006225D /* EpisodeFeedPullOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeFeedPullOperation.swift; sourceTree = "<group>"; };
 		EE63987B21F2F49500846F5C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		EE87752F221D923D0071025D /* EpisodePuller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodePuller.swift; path = WatchNewFeeds/SyncManager/EpisodePuller.swift; sourceTree = SOURCE_ROOT; };
-		EE877530221D923D0071025D /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManager.swift; path = WatchNewFeeds/SyncManager/SyncManager.swift; sourceTree = SOURCE_ROOT; };
-		EE877531221D923D0071025D /* EpisodeComparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodeComparator.swift; path = WatchNewFeeds/SyncManager/EpisodeComparator.swift; sourceTree = SOURCE_ROOT; };
+		EE87752F221D923D0071025D /* EpisodePuller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodePuller.swift; path = "WatchNewFeeds/New Group1/EpisodePuller.swift"; sourceTree = SOURCE_ROOT; };
+		EE877530221D923D0071025D /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManager.swift; path = "WatchNewFeeds/New Group1/SyncManager.swift"; sourceTree = SOURCE_ROOT; };
+		EE877531221D923D0071025D /* EpisodeComparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodeComparator.swift; path = "WatchNewFeeds/New Group1/EpisodeComparator.swift"; sourceTree = SOURCE_ROOT; };
 		EE877537221D927B0071025D /* SyncManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTests.swift; sourceTree = "<group>"; };
 		EE87753A221D945A0071025D /* FeedKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FeedKit.framework; path = Carthage/Build/iOS/FeedKit.framework; sourceTree = "<group>"; };
 		EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchNewFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,7 +124,7 @@
 		EE1FD15D21F2AE6200396729 /* WatchNewFeeds */ = {
 			isa = PBXGroup;
 			children = (
-				EE87752E221D92010071025D /* SyncManager */,
+				EE20F97C2220EEBD0006225D /* SyncManager */,
 				EE1FD15E21F2AE6200396729 /* AppDelegate.swift */,
 				EE63987B21F2F49500846F5C /* CoreDataStack.swift */,
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
@@ -118,15 +137,25 @@
 			path = WatchNewFeeds;
 			sourceTree = "<group>";
 		};
-		EE87752E221D92010071025D /* SyncManager */ = {
+		EE20F97C2220EEBD0006225D /* SyncManager */ = {
 			isa = PBXGroup;
 			children = (
+				EE20F97D2220EF1C0006225D /* Operations */,
 				EE877531221D923D0071025D /* EpisodeComparator.swift */,
 				EE87752F221D923D0071025D /* EpisodePuller.swift */,
 				EE877530221D923D0071025D /* SyncManager.swift */,
 			);
 			name = SyncManager;
-			path = "New Group";
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		EE20F97D2220EF1C0006225D /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				EE20F9762220343E0006225D /* EpisodeFetchOperation.swift */,
+				EE20F978222034560006225D /* EpisodeFeedPullOperation.swift */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		EE877539221D945A0071025D /* Frameworks */ = {
@@ -157,6 +186,7 @@
 				EE1FD15721F2AE6200396729 /* Sources */,
 				EE1FD15821F2AE6200396729 /* Frameworks */,
 				EE1FD15921F2AE6200396729 /* Resources */,
+				EE20F9802220F00F0006225D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -256,6 +286,8 @@
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
 				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
 				EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */,
+				EE20F9772220343E0006225D /* EpisodeFetchOperation.swift in Sources */,
+				EE20F979222034560006225D /* EpisodeFeedPullOperation.swift in Sources */,
 				EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */,
 				EE877533221D923D0071025D /* SyncManager.swift in Sources */,
 				EE877532221D923D0071025D /* EpisodePuller.swift in Sources */,

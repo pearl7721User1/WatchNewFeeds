@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1710" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Episode" representedClassName="Episode" syncable="YES">
         <attribute name="desc" attributeType="String" syncable="YES"/>
-        <attribute name="fileSize" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="fileSize" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="guid" attributeType="String" syncable="YES"/>
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="pubDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -10,10 +10,8 @@
         <relationship name="show" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Show" inverseName="episodes" inverseEntity="Show" syncable="YES"/>
     </entity>
     <entity name="Show" representedClassName="Show" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" attributeType="String" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastBuildDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="logoImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="pubDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -22,6 +20,6 @@
     </entity>
     <elements>
         <element name="Episode" positionX="-54" positionY="-9" width="128" height="150"/>
-        <element name="Show" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Show" positionX="-63" positionY="-18" width="128" height="150"/>
     </elements>
 </model>

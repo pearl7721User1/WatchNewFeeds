@@ -16,42 +16,40 @@ class CoreDataStack {
         self.persistentContainer = persistentContainer
     }
     
-    func addEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) {
+    func fetchAllEpisodes(context: NSManagedObjectContext) throws -> [Episode] {
         
-        // iterate, parse dictionary
-        /*
-         // M
-         @NSManaged public var title: String?
-         @NSManaged public var desc: String?
-         @NSManaged public var link: String?
-         @NSManaged public var guid: String?
-         @NSManaged public var pubDate: NSDate?
-         @NSManaged public var fileSize: Int16
-         @NSManaged public var show: Show?
-         
- */
-        for (_,v) in dictArray.enumerated() {
-            guard let title = v["title"] as? String,
-                let desc = v["desc"] as? String,
-            let link = v["link"] as? String,
-            let guid = v["guid"] as? String,
-            let pubDateString = v["pubDate"] as? String,
-                let fileSize = v["fileSize"] as? Int64 else {
+        let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest()
+        var storedEpisodes: [Episode]?
+        do {
+            storedEpisodes = try context.fetch(fetchRequest)
+        } catch {
+            throw error
+        }
+        
+        return storedEpisodes!
+    }
+    
+    func addEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) throws {
+        
+        for (_,dict) in dictArray.enumerated() {
+            
+            if let episodeProperties = try? Episode.deserialized(dict: dict) {
                 
-                print("\(v.description) is not a valid dictionary")
-                continue
+                let episode = Episode(context: context)
+                
+                // feed properties
+                episode.title = episodeProperties.title
+                episode.desc = episodeProperties.desc
+                episode.link = episodeProperties.link
+                episode.guid = episodeProperties.guid
+                episode.pubDate = episodeProperties.pubDate as NSDate
+                episode.fileSize = episodeProperties.fileSize
+                
+            } else {
+                
+                // throw exception
             }
             
-            // create a episode nsmanabed object
-            let episode = Episode(context: context)
-            
-            // feed properties
-            episode.title = title
-            episode.desc = desc
-            episode.link = link
-            episode.guid = guid
-            episode.pubDate = Date() as NSDate
-            episode.fileSize = fileSize
             
         }
         
@@ -59,50 +57,45 @@ class CoreDataStack {
         do {
             try context.save()
         } catch {
-            print(error.localizedDescription)
+            throw error
         }
         
     }
     
-    func updateEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) {
+    func updateEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) throws {
         
-        // fetch one by one by guid to create an in-memory nsmanaged object
-        for (_,v) in dictArray.enumerated() {
-            guard let title = v["title"] as? String,
-                let desc = v["desc"] as? String,
-                let link = v["link"] as? String,
-                let guid = v["guid"] as? String,
-                let pubDateString = v["pubDate"] as? String,
-                let fileSize = v["fileSize"] as? Int64 else {
-                    
-                    print("\(v.description) is not a valid dictionary")
-                    continue
-            }
-        
-            let fetchRequest = Episode.fetchRequest(guid: guid)
-            var episode: Episode?
-            do {
-                let fetchResult = try context.fetch(fetchRequest)
+        for (_,dict) in dictArray.enumerated() {
+            
+            if let episodeProperties = try? Episode.deserialized(dict: dict) {
                 
-                if fetchResult.count != 1 {
-                    print("guid:\(guid) is more than one or has not been found")
+                let fetchRequest = Episode.fetchRequest(guid: episodeProperties.guid)
+                var episode: Episode?
+                do {
+                    let fetchResult = try context.fetch(fetchRequest)
+                    
+                    if fetchResult.count != 1 {
+                        print("guid:\(episodeProperties.guid) is more than one or has not been found")
+                    }
+                    
+                    episode = fetchResult.first
+                    
+                } catch {
+                    print(error.localizedDescription)
                     continue
                 }
                 
-                episode = fetchResult.first
+                // update nsmanaged object
+                episode?.title = episodeProperties.title
+                episode?.desc = episodeProperties.desc
+                episode?.link = episodeProperties.link
+                episode?.guid = episodeProperties.guid
+                episode?.pubDate = episodeProperties.pubDate as NSDate
+                episode?.fileSize = episodeProperties.fileSize
                 
-            } catch {
-                print(error.localizedDescription)
-                continue
+            } else {
+                
+                // throw exception
             }
-        
-            // update nsmanaged object
-            episode?.title = title
-            episode?.desc = desc
-            episode?.link = link
-            episode?.guid = guid
-            episode?.pubDate = Date() as NSDate
-            episode?.fileSize = fileSize
             
         }
         
@@ -110,7 +103,7 @@ class CoreDataStack {
         do {
             try context.save()
         } catch {
-            print(error.localizedDescription)
+            throw error
         }
     }
     

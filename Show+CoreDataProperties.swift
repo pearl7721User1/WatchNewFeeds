@@ -17,10 +17,8 @@ extension Show {
         return NSFetchRequest<Show>(entityName: "Show")
     }
 
-    @NSManaged public var category: String?
     @NSManaged public var desc: String?
     @NSManaged public var language: String?
-    @NSManaged public var lastBuildDate: NSDate?
     @NSManaged public var link: String?
     @NSManaged public var logoImage: NSData?
     @NSManaged public var pubDate: NSDate?

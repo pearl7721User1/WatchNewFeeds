@@ -49,7 +49,13 @@ class WatchNewFeedsTests: XCTestCase {
         
         // insert sample episodes to persistent store
         let episodesForAdding = sampleEpisodeDictForAdding()
-        sut.addEpisodes(dictArray: episodesForAdding, context: backgroundContext)
+        
+        do {
+            try sut.addEpisodes(dictArray: episodesForAdding, context: backgroundContext)
+        } catch {
+            XCTFail()
+        }
+        
         
         
         // match the two sets
@@ -81,10 +87,21 @@ class WatchNewFeedsTests: XCTestCase {
         
         // insert sample episodes to persistent store
         let episodesForAdding = sampleEpisodeDictForAdding()
-        sut.addEpisodes(dictArray: episodesForAdding, context: backgroundContext)
+        
+        do {
+            try sut.addEpisodes(dictArray: episodesForAdding, context: backgroundContext)
+        } catch {
+            XCTFail()
+        }
+        
         
         let episodesForUpdating = sampleEpisodeDictForUpdating()
-        sut.updateEpisodes(dictArray: episodesForUpdating, context: backgroundContext)
+        
+        do {
+            try sut.updateEpisodes(dictArray: episodesForUpdating, context: backgroundContext)
+        } catch {
+            XCTFail()
+        }
         
         
         for (i,_) in episodesForUpdating.enumerated() {
@@ -123,69 +140,28 @@ class WatchNewFeedsTests: XCTestCase {
 
 extension WatchNewFeedsTests {
     func sampleEpisodeDictForAdding() -> [[String:Any]] {
-        /*
-        @NSManaged public var title: String?
-        @NSManaged public var desc: String?
-        @NSManaged public var link: String?
-        @NSManaged public var guid: String?
-        @NSManaged public var pubDate: NSDate?
-        @NSManaged public var fileSize: Int16
-        @NSManaged public var show: Show?
-        */
         
-        let sampleEpisode1: [String: Any] = ["title": "Roasting Fire",
-                    "desc": "The Simpsons goes to see the quack",
-                    "link": "https://www.roastingFire.com",
-                    "guid": "7987239841",
-                    "pubDate": "pubDate",
-                    "fileSize": Int64(12356)]
+        let sampleEpisode1 = Episode.serialized(desc: "The Simpsons goes to see the quack", fileSize: Double(12356), guid: "7987239841", link: "https://www.roastingFire.com", pubDate: Date(), title: "Roasting Fire")
         
-        let sampleEpisode2: [String: Any] = ["title": "Lisa got braces",
-                              "desc": "Homer organizes the union to fight the newclear power plant's sweeping cut on healthcare",
-                              "link": "https://www.lisaGotBraces.com",
-                              "guid": "2341928",
-                              "pubDate": "pubDate",
-                              "fileSize": Int64(123455)]
+        let sampleEpisode2 = Episode.serialized(desc: "Homer organizes the union to fight the newclear power plant's sweeping cut on healthcare", fileSize: Double(123455), guid: "2341928", link: "https://www.lisaGotBraces.com", pubDate: Date(), title: "Lisa got braces")
         
-        let sampleEpisode3: [String: Any] = ["title": "Bart goes to school",
-                              "desc": "Bart cheats on the iq tests and goes to a genius school",
-                              "link": "https://www.bartGoesToSchool.com",
-                              "guid": "12342431",
-                              "pubDate": "pubDate",
-                              "fileSize": Int64(9134)]
+        let sampleEpisode3 = Episode.serialized(desc: "Bart cheats on the iq tests and goes to a genius school", fileSize: Double(9134), guid: "12342431", link: "https://www.bartGoesToSchool.com", pubDate: Date(), title: "Bart goes to school")
         
-        let sampleEpisode4: [String: Any] = ["title": "The haunted theater",
-                              "desc": "The Alden children solves the mystery of the huanted theater in Elmford",
-                              "link": "https://www.HauntedTheater.com",
-                              "guid": "7652374",
-                              "pubDate": "pubDate",
-                              "fileSize": Int64(2341)]
+        let sampleEpisode4 = Episode.serialized(desc: "The Alden children solves the mystery of the huanted theater in Elmford", fileSize: Double(2341), guid: "7652374", link: "https://www.HauntedTheater.com", pubDate: Date(), title: "The haunted theater")
         
-        let sampleEpisode5: [String: Any] = ["title": "The mystery bookstore",
-                              "desc": "The Alden children help run the mystery bookstore",
-                              "link": "https://www.mysteryBookstore.com",
-                              "guid": "865326341",
-                              "pubDate": "pubDate",
-                              "fileSize": Int64(2863)]
+        let sampleEpisode5 = Episode.serialized(desc: "The Alden children help run the mystery bookstore", fileSize: Double(2863), guid: "865326341", link: "https://www.mysteryBookstore.com", pubDate: Date(), title: "The mystery bookstore")
+        
         
         return [sampleEpisode1, sampleEpisode2, sampleEpisode3, sampleEpisode4, sampleEpisode5]
         
     }
     
     func sampleEpisodeDictForUpdating() -> [[String:Any]] {
-        let sampleEpisode3: [String: Any] = ["title": "BART GOES TO SCHOOL",
-                                             "desc": "BART CHEATS ON IQ TEST",
-                                             "link": "https://www.bartGoesToSchool.com",
-                                             "guid": "12342431",
-                                             "pubDate": "pubDate",
-                                             "fileSize": Int64(9134)]
         
-        let sampleEpisode4: [String: Any] = ["title": "THE HAUNTED THEATER",
-                                             "desc": "THE GHOSTS IN THE THEATER TURNS OUT TO BE A MADE UP",
-                                             "link": "https://www.HauntedTheater.com",
-                                             "guid": "7652374",
-                                             "pubDate": "pubDate",
-                                             "fileSize": Int64(2341)]
+        let sampleEpisode3 = Episode.serialized(desc: "BART CHEATS ON IQ TEST", fileSize: Double(9134), guid: "12342431", link: "https://www.bartGoesToSchool.com", pubDate: Date(), title: "BART GOES TO SCHOOL")
+        
+        let sampleEpisode4 = Episode.serialized(desc: "THE GHOSTS IN THE THEATER TURNS OUT TO BE A MADE UP", fileSize: Double(2341), guid: "7652374", link: "https://www.HauntedTheater.com", pubDate: Date(), title: "THE HAUNTED THEATER")
+        
         return [sampleEpisode3, sampleEpisode4]
     }
 }
