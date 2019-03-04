@@ -48,6 +48,8 @@ class CoreDataStack {
             } else {
                 
                 // throw exception
+                // TODO: - not sure how to report this error. maybe an error needs some associated values
+                
             }
             
             
@@ -94,7 +96,7 @@ class CoreDataStack {
                 
             } else {
                 
-                // throw exception
+                // TODO: throw exception
             }
             
         }

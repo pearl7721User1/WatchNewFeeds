@@ -13,7 +13,7 @@ class EpisodePuller {
     
     private let feedURL: String
     private let episodeFetchOperation: EpisodeFetchOperation
-//    private let episodeFeedPullOperation: EpisodeFeedPullOperation
+    private let episodeFeedPullOperation: EpisodeFeedPullOperation
     
     typealias EpisodePullerCompletion = (Error?, [Episode]?, [[String:Any]]?) -> Void
     
@@ -29,10 +29,8 @@ class EpisodePuller {
         
         let backgroundContext = coreDataStack.persistentContainer.newBackgroundContext()
         self.episodeFetchOperation = EpisodeFetchOperation(context: backgroundContext, coreDataStack: coreDataStack)
-        
-        
+        self.episodeFeedPullOperation = EpisodeFeedPullOperation(feedUrl: "http:allearsenglish.libsyn.com/rss")
     }
-    
     
     func pull(completion:EpisodePullerCompletion) {
         

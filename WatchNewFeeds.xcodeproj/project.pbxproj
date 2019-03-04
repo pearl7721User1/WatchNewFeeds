@@ -16,6 +16,7 @@
 		EE20F9772220343E0006225D /* EpisodeFetchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9762220343E0006225D /* EpisodeFetchOperation.swift */; };
 		EE20F979222034560006225D /* EpisodeFeedPullOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F978222034560006225D /* EpisodeFeedPullOperation.swift */; };
 		EE20F97F2220F00F0006225D /* FeedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE87753A221D945A0071025D /* FeedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EE20F9B1222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE20F9B0222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift */; };
 		EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE63987B21F2F49500846F5C /* CoreDataStack.swift */; };
 		EE877532221D923D0071025D /* EpisodePuller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE87752F221D923D0071025D /* EpisodePuller.swift */; };
 		EE877533221D923D0071025D /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877530221D923D0071025D /* SyncManager.swift */; };
@@ -64,6 +65,7 @@
 		EE1FD16D21F2AE6200396729 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE20F9762220343E0006225D /* EpisodeFetchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeFetchOperation.swift; sourceTree = "<group>"; };
 		EE20F978222034560006225D /* EpisodeFeedPullOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeFeedPullOperation.swift; sourceTree = "<group>"; };
+		EE20F9B0222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectsDictionaryInitTests.swift; sourceTree = "<group>"; };
 		EE63987B21F2F49500846F5C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		EE87752F221D923D0071025D /* EpisodePuller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodePuller.swift; path = "WatchNewFeeds/New Group1/EpisodePuller.swift"; sourceTree = SOURCE_ROOT; };
 		EE877530221D923D0071025D /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManager.swift; path = "WatchNewFeeds/New Group1/SyncManager.swift"; sourceTree = SOURCE_ROOT; };
@@ -171,6 +173,7 @@
 			children = (
 				EE91EB6C21F365E800E12191 /* WatchNewFeedsTests.swift */,
 				EE877537221D927B0071025D /* SyncManagerTests.swift */,
+				EE20F9B0222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift */,
 				EE91EB6E21F365E800E12191 /* Info.plist */,
 			);
 			path = WatchNewFeedsTests;
@@ -301,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */,
+				EE20F9B1222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift in Sources */,
 				EE91EB6D21F365E800E12191 /* WatchNewFeedsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

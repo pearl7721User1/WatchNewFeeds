@@ -41,5 +41,37 @@ extension Show {
 
     @objc(removeEpisodes:)
     @NSManaged public func removeFromEpisodes(_ values: NSSet)
-
+    
+    typealias ShowProperties = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String)
+    
+    enum error: Error {
+        case DeserializationFail
+    }
+    
+    
+    class func serialized(desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String) -> [String: Any] {
+        
+        let showDict: [String: Any] = ["desc": desc,
+                                          "language": language,
+                                          "link": link,
+                                          "logoImageUrlString": logoImageUrlString,
+                                          "pubDate": pubDate,
+                                          "title": title]
+        return showDict
+    }
+    
+    class func deserialized(dict: [String: Any]) throws -> ShowProperties {
+        
+        if let desc = dict["desc"] as? String,
+            let language = dict["language"] as? String,
+            let link = dict["link"] as? String,
+            let logoImageUrlString = dict["logoImageUrlString"] as? String,
+            let pubDate = dict["pubDate"] as? Date,
+            let title = dict["title"] as? String {
+            
+            return (desc: desc, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title)
+        }
+        
+        throw Show.error.DeserializationFail
+    }
 }

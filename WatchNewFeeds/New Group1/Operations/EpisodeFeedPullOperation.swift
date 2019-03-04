@@ -13,6 +13,11 @@ class EpisodeFeedPullOperation: Operation {
 
     private var rssFeed: [String: Any]?
     private var error: Error?
+    private var parser: FeedParser
+    
+    init(feedUrl: String) {
+        self.parser = FeedParser(URL: feedUrl)
+    }
     
     // MARK: CunCurrency
     private var _executing = false {
@@ -55,9 +60,6 @@ class EpisodeFeedPullOperation: Operation {
     override func start() {
         
         executing(true)
-        
-        let feedURL = URL.init(string: "http://allearsenglish.libsyn.com/rss")!
-        let parser = FeedParser(URL: feedURL)
         
         
         // Parse asynchronously, not to block the UI.
@@ -105,6 +107,7 @@ class EpisodeFeedPullOperation: Operation {
         guard let title = rssFeed.title,
             let description = rssFeed.description,
             let link = rssFeed.link,
+            let language = rssFeed.language,
             let pubDate = rssFeed.pubDate,
             let logoImage = rssFeed.image,
             let logoImageUrlString = logoImage.url else {
@@ -112,14 +115,7 @@ class EpisodeFeedPullOperation: Operation {
                 return nil
         }
         
-        
-        
-        var show = [String: Any]()
-        show["title"] = title
-        show["description"] = description
-        show["link"] = link
-        show["pubDate"] = pubDate
-        show["logoImageUrl"] = logoImageUrlString
+        let show = Show.serialized(desc: description, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title)
         
         return show
     }
