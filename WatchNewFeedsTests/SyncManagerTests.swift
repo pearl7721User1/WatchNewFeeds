@@ -31,7 +31,7 @@ class SyncManagerTests: XCTestCase {
         
         // mock persistent container
         let coreDataStack = CoreDataStack(with: mockContainer)
-        self.syncManager = SyncManager.init(coreDataStack: coreDataStack, feedURL: "abc")
+//        self.syncManager = SyncManager.init(coreDataStack: coreDataStack, feedURL: "abc")
         
     }
     

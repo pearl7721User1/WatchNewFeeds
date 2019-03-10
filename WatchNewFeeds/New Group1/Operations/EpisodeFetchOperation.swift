@@ -24,7 +24,7 @@ class EpisodeFetchOperation: Operation {
         self.episodes = try? coreDataStack.fetchAllEpisodes(context: context)
     }
     
-    func fetchedEpisodes() -> [Episode]? {        
+    func fetchedEpisodes() -> [Episode]? {
         return episodes
     }
 }

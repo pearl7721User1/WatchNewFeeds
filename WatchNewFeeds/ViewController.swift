@@ -14,10 +14,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let operation = EpisodeFeedPullOperation()
+        let operation = FeedPullOperation(feedUrl: URL(string:"http:allearsenglish.libsyn.com/rss")!)
         operation.start()
         
-        
+
     }
 
     override func didReceiveMemoryWarning() {

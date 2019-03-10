@@ -9,13 +9,14 @@
 import UIKit
 import FeedKit
 
-class EpisodeFeedPullOperation: Operation {
+class FeedPullOperation: Operation {
 
-    private var rssFeed: [String: Any]?
-    private var error: Error?
+    var show: [String: Any]?
+    var episodes = [[String: Any]]()
     private var parser: FeedParser
     
-    init(feedUrl: String) {
+    init(feedUrl: URL) {
+        
         self.parser = FeedParser(URL: feedUrl)
     }
     
@@ -65,8 +66,6 @@ class EpisodeFeedPullOperation: Operation {
         // Parse asynchronously, not to block the UI.
         parser.parseAsync(queue: DispatchQueue.global(qos: .userInitiated)) {(result) in
             // Do your thing, then back to the Main thread
-            self.error = result.error
-            
             
             if let rssFeed = result.rssFeed,
                 let items = rssFeed.items {
@@ -74,24 +73,14 @@ class EpisodeFeedPullOperation: Operation {
                 let showDict = self.showElements(from: rssFeed)
                 let episodeDictArray = self.episodeElements(from: items)
                 
-                // for future considerations
+                self.show = showDict
+                self.episodes = episodeDictArray
+                
+                // TODO: - what if?
                 if episodeDictArray.count != items.count {
                     print("what happend?")
                 }
                 
-                // validation
-                if let showDict = showDict {
-                    
-                    var rssFeed = [String: Any]()
-                    
-                    for (key, value) in showDict {
-                        rssFeed.updateValue(value, forKey: key)
-                    }
-                    
-                    rssFeed["episodes"] = episodeDictArray
-                    
-                    self.rssFeed = rssFeed
-                }
                 
             }
             

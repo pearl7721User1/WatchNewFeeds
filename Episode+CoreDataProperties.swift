@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 
+typealias EpisodePropertiesTuple = (desc: String, fileSize: Double, guid: String, link: String, pubDate: Date, title: String)
 
 extension Episode {
 
@@ -32,7 +33,6 @@ extension Episode {
     @NSManaged public var title: String?
     @NSManaged public var show: Show?
     
-    typealias EpisodeProperties = (desc: String, fileSize: Double, guid: String, link: String, pubDate: Date, title: String)
     
     enum error: Error {
         case DeserializationFail
@@ -50,7 +50,7 @@ extension Episode {
         return episodeDict
     }
     
-    class func deserialized(dict: [String: Any]) throws -> EpisodeProperties {
+    class func deserialized(dict: [String: Any]) throws -> EpisodePropertiesTuple {
         
         if let title = dict["title"] as? String,
             let desc = dict["desc"] as? String,
@@ -63,5 +63,29 @@ extension Episode {
         }
         
         throw Episode.error.DeserializationFail
+    }
+    
+    class func isEqualProperties(episode: Episode, dict: [String: Any]) -> Bool {
+        
+        guard let lvTitle = episode.title,
+            let lvDesc = episode.desc,
+            let lvLink = episode.link,
+            let lvGuid = episode.guid,
+            let lvPubDate = episode.pubDate,
+            let rvTitle = dict["title"] as? String,
+            let rvDesc = dict["desc"] as? String,
+            let rvLink = dict["link"] as? String,
+            let rvGuid = dict["guid"] as? String,
+            let rvPubDate = dict["pubDate"] as? Date,
+            let rvFileSize = dict["fileSize"] as? Double else {
+                return false
+        }
+        let lvFileSize = episode.fileSize
+        
+        if lvTitle == rvTitle, lvDesc == rvDesc, lvLink == rvLink, lvGuid == rvGuid, lvPubDate as Date == rvPubDate, lvFileSize == rvFileSize {
+            return true
+        } else {
+            return false
+        }
     }
 }

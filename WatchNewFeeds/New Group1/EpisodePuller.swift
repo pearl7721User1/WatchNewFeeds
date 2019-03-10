@@ -9,30 +9,31 @@
 import UIKit
 import CoreData
 
-class EpisodePuller {
+class EpisodePuller: NSObject {
     
-    private let feedURL: String
-    private let episodeFetchOperation: EpisodeFetchOperation
-    private let episodeFeedPullOperation: EpisodeFeedPullOperation
+    private let feedPullOperation: FeedPullOperation
+    @objc private var queue: OperationQueue = OperationQueue()
+    private var observationForQueue: NSKeyValueObservation?
     
-    typealias EpisodePullerCompletion = (Error?, [Episode]?, [[String:Any]]?) -> Void
+    typealias FeedPullerCompletion = (_ show: [String:Any]?, _ episodes: [[String:Any]]) -> Void
     
-    enum EpisodePullerError: Error {
-        case failedToPullFeeds
-        case failedToPullStoredEpisodes
-        case failedCompletely
-        case unknown
+    init(feedURL: URL) {
+        self.feedPullOperation = FeedPullOperation(feedUrl: feedURL)
     }
     
-    init(coreDataStack: CoreDataStack, feedURL: String) {
-        self.feedURL = feedURL
+    func pull(completion:@escaping FeedPullerCompletion) {
         
-        let backgroundContext = coreDataStack.persistentContainer.newBackgroundContext()
-        self.episodeFetchOperation = EpisodeFetchOperation(context: backgroundContext, coreDataStack: coreDataStack)
-        self.episodeFeedPullOperation = EpisodeFeedPullOperation(feedUrl: "http:allearsenglish.libsyn.com/rss")
-    }
-    
-    func pull(completion:EpisodePullerCompletion) {
+        self.observationForQueue = observe(\.queue.operationCount,
+                                           options: [.new], changeHandler:
+            { object, change in
+                
+                if (change.newValue == 0) {
+                    
+                    completion(self.feedPullOperation.show, self.feedPullOperation.episodes)
+                }
+        })
+        
+        queue.addOperation(feedPullOperation)
         
     }
     

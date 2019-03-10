@@ -11,6 +11,10 @@ import CoreData
 
 class CoreDataStack {
     
+    enum error: Error {
+        case executionError(guids: [String])
+    }
+    
     convenience init(with persistentContainer:NSPersistentContainer) {
         self.init()
         self.persistentContainer = persistentContainer
@@ -29,85 +33,140 @@ class CoreDataStack {
         return storedEpisodes!
     }
     
-    func addEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) throws {
+    func deleteEpisodes(guidArray: [String], context: NSManagedObjectContext) throws {
         
-        for (_,dict) in dictArray.enumerated() {
-            
-            if let episodeProperties = try? Episode.deserialized(dict: dict) {
-                
-                let episode = Episode(context: context)
-                
-                // feed properties
-                episode.title = episodeProperties.title
-                episode.desc = episodeProperties.desc
-                episode.link = episodeProperties.link
-                episode.guid = episodeProperties.guid
-                episode.pubDate = episodeProperties.pubDate as NSDate
-                episode.fileSize = episodeProperties.fileSize
-                
-            } else {
-                
-                // throw exception
-                // TODO: - not sure how to report this error. maybe an error needs some associated values
-                
-            }
-            
-            
-        }
+        // TODO: - delete
+        var failedGuidList = [String]()
         
-        // save context
-        do {
-            try context.save()
-        } catch {
-            throw error
-        }
-        
-    }
-    
-    func updateEpisodes(dictArray: [[String:Any]], context: NSManagedObjectContext) throws {
-        
-        for (_,dict) in dictArray.enumerated() {
+        context.performAndWait {
             
-            if let episodeProperties = try? Episode.deserialized(dict: dict) {
+            for (_,guid) in guidArray.enumerated() {
                 
-                let fetchRequest = Episode.fetchRequest(guid: episodeProperties.guid)
-                var episode: Episode?
+                let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest(guid: guid)
+                var mightBeEpisode: Episode?
                 do {
                     let fetchResult = try context.fetch(fetchRequest)
-                    
-                    if fetchResult.count != 1 {
-                        print("guid:\(episodeProperties.guid) is more than one or has not been found")
-                    }
-                    
-                    episode = fetchResult.first
-                    
+                    mightBeEpisode = fetchResult.first
                 } catch {
-                    print(error.localizedDescription)
+                    failedGuidList.append(guid)
                     continue
                 }
                 
-                // update nsmanaged object
-                episode?.title = episodeProperties.title
-                episode?.desc = episodeProperties.desc
-                episode?.link = episodeProperties.link
-                episode?.guid = episodeProperties.guid
-                episode?.pubDate = episodeProperties.pubDate as NSDate
-                episode?.fileSize = episodeProperties.fileSize
+                guard let episodeOfInterest = mightBeEpisode else {
+                    failedGuidList.append(guid)
+                    continue
+                }
                 
-            } else {
+                context.delete(episodeOfInterest)
                 
-                // TODO: throw exception
+                // save context
+                do {
+                    try context.save()
+                } catch {
+                    failedGuidList.append(guid)
+                    continue
+                }
+                
+                // notify changes
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey:[episodeOfInterest.objectID]],into: [self.persistentContainer.viewContext])
             }
             
         }
         
-        // save context
-        do {
-            try context.save()
-        } catch {
-            throw error
+        if failedGuidList.count > 0 {
+            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
+            throw theError
         }
+        
+        context.reset()
     }
+    
+    func updateEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple], context: NSManagedObjectContext) throws {
+        
+        // TODO: - delete
+        var failedGuidList = [String]()
+        
+        context.performAndWait {
+            
+            for (_,episodePropertiesTuple) in episodePropertiesTupleArray.enumerated() {
+                
+                let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest(guid: episodePropertiesTuple.guid)
+                var mightBeEpisode: Episode?
+                do {
+                    let fetchResult = try context.fetch(fetchRequest)
+                    mightBeEpisode = fetchResult.first
+                } catch {
+                    failedGuidList.append(episodePropertiesTuple.guid)
+                    continue
+                }
+                
+                guard let episodeOfInterest = mightBeEpisode else {
+                    failedGuidList.append(episodePropertiesTuple.guid)
+                    continue
+                }
+                
+                episodeOfInterest.desc = episodePropertiesTuple.desc
+                episodeOfInterest.fileSize = episodePropertiesTuple.fileSize
+                episodeOfInterest.link = episodePropertiesTuple.link
+                episodeOfInterest.pubDate = episodePropertiesTuple.pubDate as NSDate
+                episodeOfInterest.title = episodePropertiesTuple.title
+                
+                // save context
+                do {
+                    try context.save()
+                } catch {
+                    failedGuidList.append(episodePropertiesTuple.guid)
+                    continue
+                }
+                
+                // notify changes
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSUpdatedObjectsKey:[episodeOfInterest.objectID]],into: [self.persistentContainer.viewContext])
+                
+            }
+            
+        }
+        
+        if failedGuidList.count > 0 {
+            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
+            throw theError
+        }
+        
+        context.reset()
+    }    
+    
+    func insertEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple], context: NSManagedObjectContext) throws {
+        
+        var failedGuidList = [String]()
+        
+        for (_,episodePropertiesTuple) in episodePropertiesTupleArray.enumerated() {
+            
+            let episode = Episode(context: context)
+            
+            // feed properties
+            episode.title = episodePropertiesTuple.title
+            episode.desc = episodePropertiesTuple.desc
+            episode.link = episodePropertiesTuple.link
+            episode.guid = episodePropertiesTuple.guid
+            episode.pubDate = episodePropertiesTuple.pubDate as NSDate
+            episode.fileSize = episodePropertiesTuple.fileSize
+            
+            // save context
+            do {
+                try context.save()
+            } catch {
+                failedGuidList.append(episodePropertiesTuple.guid)
+            }
+        }
+        
+        if failedGuidList.count > 0 {
+            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
+            throw theError
+        }
+        
+        context.reset()
+        
+    }
+    
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
