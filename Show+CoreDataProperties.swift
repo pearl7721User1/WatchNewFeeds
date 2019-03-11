@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 
+typealias ShowTuple = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String)
 
 extension Show {
 
@@ -42,7 +43,7 @@ extension Show {
     @objc(removeEpisodes:)
     @NSManaged public func removeFromEpisodes(_ values: NSSet)
     
-    typealias ShowProperties = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String)
+    
     
     enum error: Error {
         case DeserializationFail
@@ -60,7 +61,7 @@ extension Show {
         return showDict
     }
     
-    class func deserialized(dict: [String: Any]) throws -> ShowProperties {
+    class func deserialized(dict: [String: Any]) throws -> ShowTuple {
         
         if let desc = dict["desc"] as? String,
             let language = dict["language"] as? String,

@@ -11,8 +11,8 @@ import FeedKit
 
 class FeedPullOperation: Operation {
 
-    var show: [String: Any]?
-    var episodes = [[String: Any]]()
+    var showTuple: ShowTuple?
+    var episodeTuples = [EpisodeTuple]()
     private var parser: FeedParser
     
     init(feedUrl: URL) {
@@ -70,17 +70,19 @@ class FeedPullOperation: Operation {
             if let rssFeed = result.rssFeed,
                 let items = rssFeed.items {
                 
-                let showDict = self.showElements(from: rssFeed)
+                if let showDict = self.showElements(from: rssFeed) {
+                    self.showTuple = try? Show.deserialized(dict: showDict)
+                }
+                
                 let episodeDictArray = self.episodeElements(from: items)
+                self.episodeTuples = episodeDictArray.flatMap{try? Episode.deserialized(dict: $0)}
                 
-                self.show = showDict
-                self.episodes = episodeDictArray
-                
+                /*
                 // TODO: - what if?
                 if episodeDictArray.count != items.count {
                     print("what happend?")
                 }
-                
+                */
                 
             }
             

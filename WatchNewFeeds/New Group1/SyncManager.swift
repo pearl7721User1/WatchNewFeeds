@@ -32,9 +32,9 @@ class SyncManager {
             return
         }
         
-        episodePuller.pull(completion: { (show, episodesDictArray) in
+        episodePuller.pull(completion: { (showTuple, episodeTuples) in
             
-            let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodesDict: episodesDictArray)
+            let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
             self.handle(result: comparatorResult)
             
         })
@@ -42,17 +42,8 @@ class SyncManager {
     
     private func handle(result: EpisodeComparatorResult) {
         
-        if let deleteRequired = result.deleteRequired {
-            try? self.coreDataStack.deleteEpisodes(guidArray: deleteRequired, context: self.context)
-        }
-        
-        if let updateRequired = result.updateRequired {
-//            try? self.coreDataStack.updateEpisodes(episodePropertiesArray: updateRequired, context: self.context)
-        }
-        
-        if let insertRequired = result.insertRequired {
-//            try? self.coreDataStack.insertEpisodes(dictArray: insertRequired, context: self.context)
-        }
-        
+        try? self.coreDataStack.deleteEpisodes(guidArray: result.deleteRequired, context: self.context)
+        try? self.coreDataStack.updateEpisodes(episodeTuples: result.updateRequired, context: self.context)
+        try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, context: self.context)
     }
 }

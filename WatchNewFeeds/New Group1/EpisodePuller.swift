@@ -15,7 +15,7 @@ class EpisodePuller: NSObject {
     @objc private var queue: OperationQueue = OperationQueue()
     private var observationForQueue: NSKeyValueObservation?
     
-    typealias FeedPullerCompletion = (_ show: [String:Any]?, _ episodes: [[String:Any]]) -> Void
+    typealias FeedPullerCompletion = (_ show: ShowTuple?, _ episodes: [EpisodeTuple]) -> Void
     
     init(feedURL: URL) {
         self.feedPullOperation = FeedPullOperation(feedUrl: feedURL)
@@ -29,7 +29,7 @@ class EpisodePuller: NSObject {
                 
                 if (change.newValue == 0) {
                     
-                    completion(self.feedPullOperation.show, self.feedPullOperation.episodes)
+                    completion(self.feedPullOperation.showTuple, self.feedPullOperation.episodeTuples)
                 }
         })
         

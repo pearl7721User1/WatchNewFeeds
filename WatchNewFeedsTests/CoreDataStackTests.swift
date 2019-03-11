@@ -81,10 +81,10 @@ class CoreDataStackTests: XCTestCase {
         
         // sum up
         let summedUpDictArray = self.summedUpDictArray(oldDictArray: feedEpisodesDictArray, updates: updates)
-        let summedUpEpisodePropertiesTupleArray = summedUpDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
+        let summedUpEpisodeTupleArray = summedUpDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         
         // fetch episodes for comparison
-        let guids = summedUpEpisodePropertiesTupleArray.map{$0.guid}
+        let guids = summedUpEpisodeTupleArray.map{$0.guid}
         let insertedEpisodes = self.insertedEpisodes(guids: guids)
         
         if (insertedEpisodes.count != summedUpDictArray.count) || (insertedEpisodes.count < 1) {
@@ -180,7 +180,7 @@ class CoreDataStackTests: XCTestCase {
         return insertedEpisodes
     }
     
-    private func insertEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple]) {
+    private func insertEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
         do {
             try sut.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray, context: self.backgroundContext)
             
@@ -189,7 +189,7 @@ class CoreDataStackTests: XCTestCase {
         }
     }
     
-    private func updateEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple]) {
+    private func updateEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
         do {
             try sut.updateEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray, context: self.backgroundContext)
             

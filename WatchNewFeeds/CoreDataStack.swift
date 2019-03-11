@@ -81,14 +81,14 @@ class CoreDataStack {
         context.reset()
     }
     
-    func updateEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple], context: NSManagedObjectContext) throws {
+    func updateEpisodes(episodeTuples: [EpisodeTuple], context: NSManagedObjectContext) throws {
         
         // TODO: - delete
         var failedGuidList = [String]()
         
         context.performAndWait {
             
-            for (_,episodePropertiesTuple) in episodePropertiesTupleArray.enumerated() {
+            for (_,episodePropertiesTuple) in episodeTuples.enumerated() {
                 
                 let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest(guid: episodePropertiesTuple.guid)
                 var mightBeEpisode: Episode?
@@ -132,13 +132,13 @@ class CoreDataStack {
         }
         
         context.reset()
-    }    
+    }
     
-    func insertEpisodes(episodePropertiesTupleArray: [EpisodePropertiesTuple], context: NSManagedObjectContext) throws {
+    func insertEpisodes(episodeTuples: [EpisodeTuple], context: NSManagedObjectContext) throws {
         
         var failedGuidList = [String]()
         
-        for (_,episodePropertiesTuple) in episodePropertiesTupleArray.enumerated() {
+        for (_,episodePropertiesTuple) in episodeTuples.enumerated() {
             
             let episode = Episode(context: context)
             
