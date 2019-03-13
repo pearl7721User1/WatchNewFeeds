@@ -46,7 +46,7 @@ class CoreDataStackTests: XCTestCase {
     func testInsertingEpisodes() {
 
         // insert sample episodes
-        let feedEpisodesDictArray = sampleFeedEpisodes()
+        let feedEpisodesDictArray = EpisodeSampleFactory.sampleFeedEpisodes()
         let episodePropertiesTupleArray = feedEpisodesDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         self.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray)
         
@@ -70,12 +70,12 @@ class CoreDataStackTests: XCTestCase {
     func testUpdatingEpisodes() {
         
         // insert sample episodes
-        let feedEpisodesDictArray = sampleFeedEpisodes()
+        let feedEpisodesDictArray = EpisodeSampleFactory.sampleFeedEpisodes()
         let episodePropertiesTupleArray = feedEpisodesDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         self.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray)
         
         // update episodes
-        let updates = sampleFeedEpisodes2()
+        let updates = EpisodeSampleFactory.sampleFeedEpisodes2()
         let updatesTupleArray = updates.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         self.updateEpisodes(episodePropertiesTupleArray: updatesTupleArray)
         
@@ -103,12 +103,12 @@ class CoreDataStackTests: XCTestCase {
     func testUpdatingEpisodesWithWrongGuidsThrowError() {
         
         // insert sample episodes
-        let feedEpisodesDictArray = sampleFeedEpisodes()
+        let feedEpisodesDictArray = EpisodeSampleFactory.sampleFeedEpisodes()
         let episodePropertiesTupleArray = feedEpisodesDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         self.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray)
         
         // update episodes
-        let updates = sampleFeedEpisodes2()
+        let updates = EpisodeSampleFactory.sampleFeedEpisodes2()
         var updatesTupleArray = updates.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         
         let numOfWrongGuids = 1
@@ -118,7 +118,7 @@ class CoreDataStackTests: XCTestCase {
         updatesTupleArray[0].guid = wrongGuid
         
         do {
-            try sut.updateEpisodes(episodePropertiesTupleArray: updatesTupleArray, context: self.backgroundContext)
+            try sut.updateEpisodes(episodeTuples: updatesTupleArray, context: self.backgroundContext)
             
         } catch {
             
@@ -137,7 +137,7 @@ class CoreDataStackTests: XCTestCase {
     
     func testDeletingAllEpisodes() {
         // insert sample episodes
-        let feedEpisodesDictArray = sampleFeedEpisodes()
+        let feedEpisodesDictArray = EpisodeSampleFactory.sampleFeedEpisodes()
         let episodePropertiesTupleArray = feedEpisodesDictArray.filter{ (try? Episode.deserialized(dict: $0)) != nil }.map{try! Episode.deserialized(dict: $0)}
         self.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray)
         
@@ -182,7 +182,7 @@ class CoreDataStackTests: XCTestCase {
     
     private func insertEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
         do {
-            try sut.insertEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray, context: self.backgroundContext)
+            try sut.insertEpisodes(episodeTuples: episodePropertiesTupleArray, context: self.backgroundContext)
             
         } catch {
             XCTFail()
@@ -191,7 +191,7 @@ class CoreDataStackTests: XCTestCase {
     
     private func updateEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
         do {
-            try sut.updateEpisodes(episodePropertiesTupleArray: episodePropertiesTupleArray, context: self.backgroundContext)
+            try sut.updateEpisodes(episodeTuples: episodePropertiesTupleArray, context: self.backgroundContext)
             
         } catch {
             XCTFail()
@@ -243,29 +243,5 @@ class CoreDataStackTests: XCTestCase {
 }
 
 extension CoreDataStackTests {
-    func sampleFeedEpisodes() -> [[String:Any]] {
-        
-        let sampleEpisode1 = Episode.serialized(desc: "The Simpsons goes to see the quack", fileSize: Double(12356), guid: "7987239841", link: "https://www.roastingFire.com", pubDate: Date(), title: "Roasting Fire")
-        
-        let sampleEpisode2 = Episode.serialized(desc: "Homer organizes the union to fight the newclear power plant's sweeping cut on healthcare", fileSize: Double(123455), guid: "2341928", link: "https://www.lisaGotBraces.com", pubDate: Date(), title: "Lisa got braces")
-        
-        let sampleEpisode3 = Episode.serialized(desc: "Bart cheats on the iq tests and goes to a genius school", fileSize: Double(9134), guid: "12342431", link: "https://www.bartGoesToSchool.com", pubDate: Date(), title: "Bart goes to school")
-        
-        let sampleEpisode4 = Episode.serialized(desc: "The Alden children solves the mystery of the huanted theater in Elmford", fileSize: Double(2341), guid: "7652374", link: "https://www.HauntedTheater.com", pubDate: Date(), title: "The haunted theater")
-        
-        let sampleEpisode5 = Episode.serialized(desc: "The Alden children help run the mystery bookstore", fileSize: Double(2863), guid: "865326341", link: "https://www.mysteryBookstore.com", pubDate: Date(), title: "The mystery bookstore")
-        
-        
-        return [sampleEpisode1, sampleEpisode2, sampleEpisode3, sampleEpisode4, sampleEpisode5]
-        
-    }
     
-    func sampleFeedEpisodes2() -> [[String:Any]] {
-        
-        let sampleEpisode3 = Episode.serialized(desc: "BART CHEATS ON IQ TEST", fileSize: Double(9134), guid: "12342431", link: "https://www.bartGoesToSchool.com", pubDate: Date(), title: "BART GOES TO SCHOOL")
-        
-        let sampleEpisode4 = Episode.serialized(desc: "THE GHOSTS IN THE THEATER TURNS OUT TO BE A MADE UP", fileSize: Double(2341), guid: "7652374", link: "https://www.HauntedTheater.com", pubDate: Date(), title: "THE HAUNTED THEATER")
-        
-        return [sampleEpisode3, sampleEpisode4]
-    }
 }

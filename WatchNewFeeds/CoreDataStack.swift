@@ -9,6 +9,12 @@
 import UIKit
 import CoreData
 
+protocol BaseFeedSetup {
+    func doesBaseFeedExist() -> Bool
+    func setupBaseFeed()
+}
+
+
 class CoreDataStack {
     
     enum error: Error {
@@ -167,6 +173,41 @@ class CoreDataStack {
         
     }
     
+    func insertShow(showTuple: ShowTuple, context: NSManagedObjectContext) throws {
+        
+        let show = Show(context: context)
+
+        // feed properties
+        show.title = showTuple.title
+        show.desc = showTuple.desc
+        show.language = showTuple.language
+        show.link = showTuple.link
+        
+        DispatchQueue.global().async {
+            if let url = URL(string: showTuple.logoImageUrlString),
+                let data = try? Data(contentsOf: url) as NSData {
+                show.logoImage = data
+                
+                try? context.save()
+                
+                // reset context
+                context.reset()
+            }
+        }
+        
+        show.pubDate = showTuple.pubDate as NSDate
+
+        // save context
+        do {
+            try context.save()
+        } catch {
+            let theError = CoreDataStack.error.executionError(guids: [String]())
+            throw theError
+        }
+        
+        // do not reset context at this time
+    }
+    
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
@@ -210,4 +251,31 @@ class CoreDataStack {
             }
         }
     }
+}
+
+extension CoreDataStack: BaseFeedSetup {
+    func doesBaseFeedExist() -> Bool {
+        let fetchRequest: NSFetchRequest<Show> = Show.fetchRequest()
+        let context = self.persistentContainer.newBackgroundContext()
+        
+        var storedShows: [Show]?
+        do {
+            storedShows = try context.fetch(fetchRequest)
+        } catch {
+            return false
+        }
+        
+        return (storedShows?.first != nil) ? true : false
+    }
+    
+    func setupBaseFeed() {
+        // pull feed
+        
+        
+        // insert show
+        
+        
+    }
+    
+    
 }

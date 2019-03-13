@@ -14,14 +14,14 @@ class SyncManager {
     private var coreDataStack: CoreDataStack
     private var context: NSManagedObjectContext
     
-    var episodePuller: EpisodePuller
+    var feedPuller: FeedPuller
     var episodeComparator = EpisodeComparator()
     
     init(coreDataStack: CoreDataStack, feedURL: URL) {
         
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
-        self.episodePuller = EpisodePuller(feedURL: feedURL)
+        self.feedPuller = FeedPuller(feedURL: feedURL)
     }
     
     func sync() {
@@ -32,7 +32,7 @@ class SyncManager {
             return
         }
         
-        episodePuller.pull(completion: { (showTuple, episodeTuples) in
+        feedPuller.pull(completion: { (showTuple, episodeTuples) in
             
             let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
             self.handle(result: comparatorResult)

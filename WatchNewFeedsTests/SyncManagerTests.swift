@@ -35,10 +35,4 @@ class SyncManagerTests: XCTestCase {
         
     }
     
-    func testABC() {
-        
-        
-        
-        
-    }
 }

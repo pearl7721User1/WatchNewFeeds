@@ -47,7 +47,7 @@ class EpisodeComparator {
             
             if let guidMatched = (episodeTuples.filter{$0.guid == v.guid ?? ""}).first {
                 
-                if guidMatched.pubDate == (v.pubDate as Date?) ?? Date() {
+                if guidMatched.pubDate > (v.pubDate as Date?) ?? Date() {
                     updateRequired.append(guidMatched)
                 }
             }

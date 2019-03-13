@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class EpisodePuller: NSObject {
+class FeedPuller: NSObject {
     
     private let feedPullOperation: FeedPullOperation
     @objc private var queue: OperationQueue = OperationQueue()
