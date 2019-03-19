@@ -10,13 +10,27 @@ import UIKit
 
 class InstallBaseFeedViewController: UIViewController {
 
+    var feedInstaller: FeedInstaller!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func installButtonTapped(_ sender: UIButton) {
+        
+        // network indicator on
+        feedInstaller.installFeed(completion: {finished in
+            
+            // network indicator off
+            if finished {
+                self.dismiss(animated: true, completion: nil)
+            }
+        })
+        
+    }
+    
     /*
     // MARK: - Navigation
 

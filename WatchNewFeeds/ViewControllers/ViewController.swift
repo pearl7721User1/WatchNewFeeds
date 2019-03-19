@@ -7,26 +7,53 @@
 //
 
 import UIKit
+import CoreData
 
 let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
 
 class ViewController: UIViewController {
 
+    var allShowsFetchRequest: NSFetchRequest<Show>
+    var coreDataStack: CoreDataStack!
+    var context: NSManagedObjectContext!
+    var feedInstaller: FeedInstaller!
+    
+    var shows: [Show]?
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.allShowsFetchRequest = Show.fetchRequest()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        let operation = FeedPullOperation(feedUrl: URL(string:"http:allearsenglish.libsyn.com/rss")!)
-        operation.start()
+        self.feedInstaller = FeedInstaller(feedUrl: BaseFeedURL, coreDataStack: self.coreDataStack)
         
-
+        // feed installer installed or not
+        if self.feedInstaller.doAnyFeedsExist() {
+            populateCollectionView()
+        } else {
+            popUpInstallFeedViewController()
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func populateCollectionView() {
+        
+        self.shows = coreDataStack.fetchAllShows(context: context)
+        
+        
+        
     }
-
+    
+    private func popUpInstallFeedViewController() {
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InstallBaseFeedViewController") as! InstallBaseFeedViewController
+        vc.feedInstaller = self.feedInstaller
+        self.present(vc, animated: true, completion: nil)
+        
+    }
 
 }
 

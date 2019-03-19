@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE718EBE22406FB2008080D4 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE718EBD22406FB2008080D4 /* MyViewController.swift */; };
 		BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */; };
 		EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD15E21F2AE6200396729 /* AppDelegate.swift */; };
 		EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16021F2AE6200396729 /* ViewController.swift */; };
@@ -60,7 +59,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BE718EBD22406FB2008080D4 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallBaseFeedViewController.swift; sourceTree = "<group>"; };
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1FD15E21F2AE6200396729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,8 +111,6 @@
 		EE1FD15221F2AE6100396729 = {
 			isa = PBXGroup;
 			children = (
-				BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */,
-				BE718EBD22406FB2008080D4 /* MyViewController.swift */,
 				EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */,
 				EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */,
 				EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */,
@@ -198,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
+				BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -317,7 +314,6 @@
 				EE877533221D923D0071025D /* SyncManager.swift in Sources */,
 				BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */,
 				EE877532221D923D0071025D /* FeedPuller.swift in Sources */,
-				BE718EBE22406FB2008080D4 /* MyViewController.swift in Sources */,
 				EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */,
 				EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */,
 				EEA7305C223C06D600135795 /* FeedInstaller.swift in Sources */,

@@ -14,7 +14,6 @@ protocol FeedSetup {
     func setupFeed()
 }
 
-
 class CoreDataStack {
     
     enum error: Error {
@@ -26,14 +25,14 @@ class CoreDataStack {
         self.persistentContainer = persistentContainer
     }
     
-    func fetchAllEpisodes(context: NSManagedObjectContext) throws -> [Episode] {
+    func fetchAllEpisodes(context: NSManagedObjectContext) -> [Episode] {
         
         let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest()
         var storedEpisodes: [Episode]?
         do {
             storedEpisodes = try context.fetch(fetchRequest)
         } catch {
-            throw error
+            return [Episode]()
         }
         
         return storedEpisodes!
@@ -254,17 +253,31 @@ class CoreDataStack {
         }
     }
     
-    func fetchShow(rssFeedUrl: String, context: NSManagedObjectContext) throws -> Show? {
+    func fetchShow(rssFeedUrl: String, context: NSManagedObjectContext) -> Show? {
         
+        // TODO: - test code needed
         let fetchRequest = Show.fetchRequest(rssFeedUrl: rssFeedUrl)
         var storedShows: [Show]?
         do {
             storedShows = try context.fetch(fetchRequest)
         } catch {
-            throw error
+            return nil
         }
         
         return storedShows?.first
     }
     
+    func fetchAllShows(context: NSManagedObjectContext) -> [Show] {
+        
+        let fetchRequest: NSFetchRequest<Show> = Show.fetchRequest()
+        var storedShows: [Show]?
+        do {
+            storedShows = try context.fetch(fetchRequest)
+        } catch {
+            return [Show]()
+        }
+        
+        return storedShows!
+        
+    }
 }

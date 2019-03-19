@@ -44,6 +44,6 @@ class SyncManager {
         
         try? self.coreDataStack.deleteEpisodes(guidArray: result.deleteRequired, context: self.context)
         try? self.coreDataStack.updateEpisodes(episodeTuples: result.updateRequired, context: self.context)
-        try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, context: self.context)
+        try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, to: <#Show#>, context: self.context)
     }
 }

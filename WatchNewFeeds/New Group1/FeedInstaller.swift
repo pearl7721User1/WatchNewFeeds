@@ -24,7 +24,7 @@ class FeedInstaller {
         self.feedPuller = FeedPuller(feedURL: feedUrl)
     }
     
-    func doesFeedExist() -> Bool {
+    func doAnyFeedsExist() -> Bool {
 
         guard let mightBeShow = try? coreDataStack.fetchShow(rssFeedUrl: feedUrl.absoluteString, context: context) else {
             return false
