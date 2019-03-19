@@ -15,11 +15,12 @@
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="logoImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="pubDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rssFeedUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Episode" inverseName="show" inverseEntity="Episode" syncable="YES"/>
     </entity>
     <elements>
         <element name="Episode" positionX="-54" positionY="-9" width="128" height="150"/>
-        <element name="Show" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Show" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

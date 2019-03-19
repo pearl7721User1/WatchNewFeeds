@@ -10,14 +10,22 @@
 import Foundation
 import CoreData
 
-typealias ShowTuple = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String)
+typealias ShowTuple = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String, rssFeedUrl: String)
 
 extension Show {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Show> {
         return NSFetchRequest<Show>(entityName: "Show")
     }
+    
+    @nonobjc public class func fetchRequest(rssFeedUrl: String) -> NSFetchRequest<Show> {
+        
+        let fetchRequest = NSFetchRequest<Show>(entityName: "Show")
+        fetchRequest.predicate = NSPredicate(format: "rssFeedUrl == %@", rssFeedUrl)
+        return fetchRequest
+    }
 
+    @NSManaged public var rssFeedUrl: String?
     @NSManaged public var desc: String?
     @NSManaged public var language: String?
     @NSManaged public var link: String?
@@ -50,14 +58,15 @@ extension Show {
     }
     
     
-    class func serialized(desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String) -> [String: Any] {
+    class func serialized(desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String, rssFeedUrl: String) -> [String: Any] {
         
         let showDict: [String: Any] = ["desc": desc,
                                           "language": language,
                                           "link": link,
                                           "logoImageUrlString": logoImageUrlString,
                                           "pubDate": pubDate,
-                                          "title": title]
+                                          "title": title,
+                                          "rssFeedUrl": rssFeedUrl]
         return showDict
     }
     
@@ -68,9 +77,10 @@ extension Show {
             let link = dict["link"] as? String,
             let logoImageUrlString = dict["logoImageUrlString"] as? String,
             let pubDate = dict["pubDate"] as? Date,
-            let title = dict["title"] as? String {
+            let title = dict["title"] as? String,
+            let rssFeedUrl = dict["rssFeedUrl"] as? String {
             
-            return (desc: desc, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title)
+            return (desc: desc, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title, rssFeedUrl: rssFeedUrl)
         }
         
         throw Show.error.DeserializationFail

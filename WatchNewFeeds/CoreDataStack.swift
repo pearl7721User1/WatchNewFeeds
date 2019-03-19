@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 
-protocol BaseFeedSetup {
-    func doesBaseFeedExist() -> Bool
-    func setupBaseFeed()
+protocol FeedSetup {
+    func doesFeedExist() -> Bool
+    func setupFeed()
 }
 
 
@@ -140,7 +140,7 @@ class CoreDataStack {
         context.reset()
     }
     
-    func insertEpisodes(episodeTuples: [EpisodeTuple], context: NSManagedObjectContext) throws {
+    func insertEpisodes(episodeTuples: [EpisodeTuple], to show:Show, context: NSManagedObjectContext) throws {
         
         var failedGuidList = [String]()
         
@@ -155,6 +155,7 @@ class CoreDataStack {
             episode.guid = episodePropertiesTuple.guid
             episode.pubDate = episodePropertiesTuple.pubDate as NSDate
             episode.fileSize = episodePropertiesTuple.fileSize
+            episode.show = show
             
             // save context
             do {
@@ -173,7 +174,7 @@ class CoreDataStack {
         
     }
     
-    func insertShow(showTuple: ShowTuple, context: NSManagedObjectContext) throws {
+    func insertShow(showTuple: ShowTuple, context: NSManagedObjectContext) -> Show? {
         
         let show = Show(context: context)
 
@@ -182,6 +183,7 @@ class CoreDataStack {
         show.desc = showTuple.desc
         show.language = showTuple.language
         show.link = showTuple.link
+        show.rssFeedUrl = showTuple.rssFeedUrl
         
         DispatchQueue.global().async {
             if let url = URL(string: showTuple.logoImageUrlString),
@@ -201,11 +203,11 @@ class CoreDataStack {
         do {
             try context.save()
         } catch {
-            let theError = CoreDataStack.error.executionError(guids: [String]())
-            throw theError
+            return nil
         }
         
         // do not reset context at this time
+        return show
     }
     
     
@@ -251,31 +253,18 @@ class CoreDataStack {
             }
         }
     }
-}
-
-extension CoreDataStack: BaseFeedSetup {
-    func doesBaseFeedExist() -> Bool {
-        let fetchRequest: NSFetchRequest<Show> = Show.fetchRequest()
-        let context = self.persistentContainer.newBackgroundContext()
+    
+    func fetchShow(rssFeedUrl: String, context: NSManagedObjectContext) throws -> Show? {
         
+        let fetchRequest = Show.fetchRequest(rssFeedUrl: rssFeedUrl)
         var storedShows: [Show]?
         do {
             storedShows = try context.fetch(fetchRequest)
         } catch {
-            return false
+            throw error
         }
         
-        return (storedShows?.first != nil) ? true : false
+        return storedShows?.first
     }
-    
-    func setupBaseFeed() {
-        // pull feed
-        
-        
-        // insert show
-        
-        
-    }
-    
     
 }

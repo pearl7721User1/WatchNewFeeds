@@ -35,7 +35,7 @@ class SyncManager {
         feedPuller.pull(completion: { (showTuple, episodeTuples) in
             
             let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
-            self.handle(result: comparatorResult)
+            self.handle(result : comparatorResult)
             
         })
     }

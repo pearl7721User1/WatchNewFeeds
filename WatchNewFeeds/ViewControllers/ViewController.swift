@@ -8,6 +8,8 @@
 
 import UIKit
 
+let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {

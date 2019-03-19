@@ -29,8 +29,6 @@ class FeedPullerTests: XCTestCase {
         
         self.feedPuller.pull { (showTuple: ShowTuple?, episodeTuples: [EpisodeTuple]) in
             
-            
-            
             expectation.fulfill()
         }
         
