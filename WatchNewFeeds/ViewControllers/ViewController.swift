@@ -11,8 +11,9 @@ import CoreData
 
 let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    @IBOutlet weak var collectionView: UICollectionView!
     var allShowsFetchRequest: NSFetchRequest<Show>
     var coreDataStack: CoreDataStack!
     var context: NSManagedObjectContext!
@@ -42,9 +43,7 @@ class ViewController: UIViewController {
     private func populateCollectionView() {
         
         self.shows = coreDataStack.fetchAllShows(context: context)
-        
-        
-        
+        collectionView.reloadData()
     }
     
     private func popUpInstallFeedViewController() {
@@ -55,5 +54,13 @@ class ViewController: UIViewController {
         
     }
 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return shows.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+    }
+    
 }
 

@@ -11,7 +11,7 @@ import UIKit
 
 class EpisodeComparator {
     
-    func compare(episodes: [Episode], episodeTuples: [EpisodeTuple]) -> EpisodeComparatorResult {
+    func compare(episodes: [Episode], episodeTuples: [EpisodeFeedTuple]) -> EpisodeComparatorResult {
         
         var episodeCompareResult = EpisodeComparatorResult()
         
@@ -24,7 +24,7 @@ class EpisodeComparator {
         return episodeCompareResult
     }
     
-    private func deleteRequired(episodes: [Episode], episodeTuples: [EpisodeTuple]) -> [String] {
+    private func deleteRequired(episodes: [Episode], episodeTuples: [EpisodeFeedTuple]) -> [String] {
         
         var deleteRequiredGuids = [String]()
         
@@ -39,9 +39,9 @@ class EpisodeComparator {
         return deleteRequiredGuids
     }
     
-    private func updateRequired(episodes: [Episode], episodeTuples: [EpisodeTuple]) -> [EpisodeTuple] {
+    private func updateRequired(episodes: [Episode], episodeTuples: [EpisodeFeedTuple]) -> [EpisodeFeedTuple] {
         
-        var updateRequired = [EpisodeTuple]()
+        var updateRequired = [EpisodeFeedTuple]()
         
         for (_,v) in episodes.enumerated() {
             
@@ -57,9 +57,9 @@ class EpisodeComparator {
         return updateRequired
     }
     
-    private func insertRequired(episodes: [Episode], episodeTuples: [EpisodeTuple]) -> [EpisodeTuple] {
+    private func insertRequired(episodes: [Episode], episodeTuples: [EpisodeFeedTuple]) -> [EpisodeFeedTuple] {
         
-        var insertRequired = [EpisodeTuple]()
+        var insertRequired = [EpisodeFeedTuple]()
         
         for (_,v) in episodeTuples.enumerated() {
             
@@ -76,6 +76,6 @@ class EpisodeComparator {
 
 struct EpisodeComparatorResult {
     var deleteRequired = [String]()
-    var updateRequired = [EpisodeTuple]()
-    var insertRequired = [EpisodeTuple]()
+    var updateRequired = [EpisodeFeedTuple]()
+    var insertRequired = [EpisodeFeedTuple]()
 }

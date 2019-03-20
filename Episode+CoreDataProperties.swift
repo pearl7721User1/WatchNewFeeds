@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-typealias EpisodeTuple = (desc: String, fileSize: Double, guid: String, link: String, pubDate: Date, title: String)
+typealias EpisodeFeedTuple = (desc: String, fileSize: Double, guid: String, link: String, pubDate: Date, title: String)
 
 extension Episode {
 
@@ -50,7 +50,7 @@ extension Episode {
         return episodeDict
     }
     
-    class func deserialized(dict: [String: Any]) throws -> EpisodeTuple {
+    class func deserialized(dict: [String: Any]) throws -> EpisodeFeedTuple {
         
         if let title = dict["title"] as? String,
             let desc = dict["desc"] as? String,

@@ -180,7 +180,7 @@ class CoreDataStackTests: XCTestCase {
         return insertedEpisodes
     }
     
-    private func insertEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
+    private func insertEpisodes(episodePropertiesTupleArray: [EpisodeFeedTuple]) {
         do {
             try sut.insertEpisodes(episodeTuples: episodePropertiesTupleArray, context: self.backgroundContext)
             
@@ -189,7 +189,7 @@ class CoreDataStackTests: XCTestCase {
         }
     }
     
-    private func updateEpisodes(episodePropertiesTupleArray: [EpisodeTuple]) {
+    private func updateEpisodes(episodePropertiesTupleArray: [EpisodeFeedTuple]) {
         do {
             try sut.updateEpisodes(episodeTuples: episodePropertiesTupleArray, context: self.backgroundContext)
             

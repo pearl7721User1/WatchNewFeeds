@@ -11,27 +11,30 @@ import CoreData
 
 class SyncManager {
 
+    // TODO: - show conforms a protocol
+    private let shows: [Show]
     private var coreDataStack: CoreDataStack
     private var context: NSManagedObjectContext
     
-    var feedPuller: FeedPuller
+    var feedPuller: FeedPuller?
     var episodeComparator = EpisodeComparator()
     
-    init(coreDataStack: CoreDataStack, feedURL: URL) {
+    init(coreDataStack: CoreDataStack, shows: [Show]) {
         
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
-        self.feedPuller = FeedPuller(feedURL: feedURL)
-    }
-    
-    func sync() {
+        self.shows = shows
         
-        guard let episodes = try? coreDataStack.fetchAllEpisodes(context: context) else {
-            // TODO: - report error
-            
-            return
+        if let rssFeedUrlString = show.rssFeedUrl,
+            let rssFeedUrl = URL(string: show.rssFeedUrl) {
+            self.feedPuller = FeedPuller(feedURL: rssFeedUrl)
         }
         
+    }
+    
+    func sync(for show:Show) throws {
+        
+        let episodes = coreDataStack.fetchAllEpisodes(context: context)
         feedPuller.pull(completion: { (showTuple, episodeTuples) in
             
             let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)

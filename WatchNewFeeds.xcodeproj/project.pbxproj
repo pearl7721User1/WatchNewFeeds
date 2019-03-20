@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE4F88EA2241FD40005295D3 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F88E82241FD40005295D3 /* ShowCell.swift */; };
+		BE4F88EB2241FD40005295D3 /* ShowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4F88E92241FD40005295D3 /* ShowCell.xib */; };
 		BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */; };
 		EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD15E21F2AE6200396729 /* AppDelegate.swift */; };
 		EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16021F2AE6200396729 /* ViewController.swift */; };
@@ -59,6 +61,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE4F88E82241FD40005295D3 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
+		BE4F88E92241FD40005295D3 /* ShowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowCell.xib; sourceTree = "<group>"; };
 		BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallBaseFeedViewController.swift; sourceTree = "<group>"; };
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1FD15E21F2AE6200396729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 			children = (
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
 				BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */,
+				BE4F88E82241FD40005295D3 /* ShowCell.swift */,
+				BE4F88E92241FD40005295D3 /* ShowCell.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 			files = (
 				EE1FD16C21F2AE6200396729 /* LaunchScreen.storyboard in Resources */,
 				EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */,
+				BE4F88EB2241FD40005295D3 /* ShowCell.xib in Resources */,
 				EE1FD16421F2AE6200396729 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +316,7 @@
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
 				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
 				EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */,
+				BE4F88EA2241FD40005295D3 /* ShowCell.swift in Sources */,
 				EE20F979222034560006225D /* FeedPullOperation.swift in Sources */,
 				EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */,
 				EE877533221D923D0071025D /* SyncManager.swift in Sources */,

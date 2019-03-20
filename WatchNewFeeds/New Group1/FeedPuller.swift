@@ -15,7 +15,7 @@ class FeedPuller: NSObject {
     @objc private var queue: OperationQueue = OperationQueue()
     private var observationForQueue: NSKeyValueObservation?
     
-    typealias FeedPullerCompletion = (_ show: ShowTuple?, _ episodes: [EpisodeTuple]) -> Void
+    typealias FeedPullerCompletion = (_ show: ShowFeedTuple?, _ episodes: [EpisodeFeedTuple]) -> Void
     
     init(feedURL: URL) {
         self.feedPullOperation = FeedPullOperation(feedUrl: feedURL)

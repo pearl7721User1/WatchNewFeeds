@@ -35,10 +35,10 @@ class FeedInstaller {
     
     func installFeed(completion:@escaping ((_ finished: Bool) -> Void)) {
         
-        feedPuller.pull { (showTuple: ShowTuple?, episodeTuples: [EpisodeTuple]) in
+        feedPuller.pull { (showTuple: ShowFeedTuple?, episodeTuples: [EpisodeFeedTuple]) in
             
             if let showTuple = showTuple,
-                let show = self.coreDataStack.insertShow(showTuple: showTuple, context: self.context) {
+                let show = self.coreDataStack.insertShow(showTuple: showTuple, rssFeedUrl: self.feedUrl, context: self.context) {
                 
                 var finished = true
                 do {

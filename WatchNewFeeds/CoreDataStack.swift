@@ -86,7 +86,7 @@ class CoreDataStack {
         context.reset()
     }
     
-    func updateEpisodes(episodeTuples: [EpisodeTuple], context: NSManagedObjectContext) throws {
+    func updateEpisodes(episodeTuples: [EpisodeFeedTuple], context: NSManagedObjectContext) throws {
         
         // TODO: - delete
         var failedGuidList = [String]()
@@ -139,7 +139,7 @@ class CoreDataStack {
         context.reset()
     }
     
-    func insertEpisodes(episodeTuples: [EpisodeTuple], to show:Show, context: NSManagedObjectContext) throws {
+    func insertEpisodes(episodeTuples: [EpisodeFeedTuple], to show:Show, context: NSManagedObjectContext) throws {
         
         var failedGuidList = [String]()
         
@@ -173,7 +173,7 @@ class CoreDataStack {
         
     }
     
-    func insertShow(showTuple: ShowTuple, context: NSManagedObjectContext) -> Show? {
+    func insertShow(showTuple: ShowFeedTuple, rssFeedUrl: URL, context: NSManagedObjectContext) -> Show? {
         
         let show = Show(context: context)
 
@@ -182,7 +182,7 @@ class CoreDataStack {
         show.desc = showTuple.desc
         show.language = showTuple.language
         show.link = showTuple.link
-        show.rssFeedUrl = showTuple.rssFeedUrl
+        show.rssFeedUrl = rssFeedUrl.absoluteString
         
         DispatchQueue.global().async {
             if let url = URL(string: showTuple.logoImageUrlString),

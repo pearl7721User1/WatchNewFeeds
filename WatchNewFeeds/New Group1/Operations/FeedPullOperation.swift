@@ -11,8 +11,8 @@ import FeedKit
 
 class FeedPullOperation: Operation {
 
-    var showTuple: ShowTuple?
-    var episodeTuples = [EpisodeTuple]()
+    var showTuple: ShowFeedTuple?
+    var episodeTuples = [EpisodeFeedTuple]()
     private var parser: FeedParser
     
     init(feedUrl: URL) {

@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-typealias ShowTuple = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String, rssFeedUrl: String)
+typealias ShowFeedTuple = (desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String)
 
 extension Show {
 
@@ -65,22 +65,20 @@ extension Show {
                                           "link": link,
                                           "logoImageUrlString": logoImageUrlString,
                                           "pubDate": pubDate,
-                                          "title": title,
-                                          "rssFeedUrl": rssFeedUrl]
+                                          "title": title]
         return showDict
     }
     
-    class func deserialized(dict: [String: Any]) throws -> ShowTuple {
+    class func deserialized(dict: [String: Any]) throws -> ShowFeedTuple {
         
         if let desc = dict["desc"] as? String,
             let language = dict["language"] as? String,
             let link = dict["link"] as? String,
             let logoImageUrlString = dict["logoImageUrlString"] as? String,
             let pubDate = dict["pubDate"] as? Date,
-            let title = dict["title"] as? String,
-            let rssFeedUrl = dict["rssFeedUrl"] as? String {
+            let title = dict["title"] as? String {
             
-            return (desc: desc, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title, rssFeedUrl: rssFeedUrl)
+            return (desc: desc, language: language, link: link, logoImageUrlString: logoImageUrlString, pubDate: pubDate, title: title)
         }
         
         throw Show.error.DeserializationFail
