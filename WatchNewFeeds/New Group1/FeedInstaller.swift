@@ -11,48 +11,54 @@ import CoreData
 
 
 class FeedInstaller {
-
-    private let feedUrl: URL
+    
+    private let feedUrls: [URL]
     var coreDataStack: CoreDataStack
     private let context: NSManagedObjectContext
-    private let feedPuller: FeedPuller
     
-    init(feedUrl: URL, coreDataStack: CoreDataStack) {
-        self.feedUrl = feedUrl
+    init(feedUrls: [URL], coreDataStack: CoreDataStack) {
+        self.feedUrls = feedUrls
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
-        self.feedPuller = FeedPuller(feedURL: feedUrl)
     }
     
-    func doAnyFeedsExist() -> Bool {
+    func installedFeeds() -> [URL] {
+        let shows = coreDataStack.fetchAllShows(context: context)
+        let urls = shows.compactMap{$0.rssFeedUrl}.compactMap{URL(string:$0)}
 
-        guard let mightBeShow = try? coreDataStack.fetchShow(rssFeedUrl: feedUrl.absoluteString, context: context) else {
-            return false
-        }
-        
-        return mightBeShow != nil ? true : false
+        return urls
     }
     
-    func installFeed(completion:@escaping ((_ finished: Bool) -> Void)) {
+    func existingFeeds() -> [URL] {
+        return feedUrls
+    }
+    
+    func installFeed(url: URL, completion:@escaping ((_ finished: Bool) -> Void)) {
         
-        feedPuller.pull { (showTuple: ShowFeedTuple?, episodeTuples: [EpisodeFeedTuple]) in
+        let feedPuller = FeedPuller(feedURL: url)
+        feedPuller.pull(completion: {(showFeedTuple: ShowFeedTuple?, episodeFeedTuples: [EpisodeFeedTuple]) in
             
-            if let showTuple = showTuple,
-                let show = self.coreDataStack.insertShow(showTuple: showTuple, rssFeedUrl: self.feedUrl, context: self.context) {
+            if let showFeedTuple = showFeedTuple,
+                let show = self.coreDataStack.insertShow(showTuple: showFeedTuple, rssFeedUrl: url, context: self.context) {
                 
                 var finished = true
                 do {
-                    try self.coreDataStack.insertEpisodes(episodeTuples: episodeTuples, to: show, context: self.context)
+                    try self.coreDataStack.insertEpisodes(episodeTuples: episodeFeedTuples, to: show, context: self.context)
                 } catch {
                     finished = false
                 }
                 
                 completion(finished)
             }
-            
-        }
-        
+        })
         
     }
     
+    
+    static func sampleFeedUrls() -> [URL] {
+        let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
+        // TODO: - more feeds
+        
+        return [BaseFeedURL]
+    }
 }

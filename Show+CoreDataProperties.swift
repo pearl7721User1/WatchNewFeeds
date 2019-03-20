@@ -58,7 +58,7 @@ extension Show {
     }
     
     
-    class func serialized(desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String, rssFeedUrl: String) -> [String: Any] {
+    class func serialized(desc: String, language: String, link: String, logoImageUrlString: String, pubDate: Date, title: String) -> [String: Any] {
         
         let showDict: [String: Any] = ["desc": desc,
                                           "language": language,

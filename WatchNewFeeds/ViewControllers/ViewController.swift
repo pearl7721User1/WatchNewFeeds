@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
+
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
@@ -23,21 +23,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         self.allShowsFetchRequest = Show.fetchRequest()
+        super.init(coder: aDecoder)        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.feedInstaller = FeedInstaller(feedUrl: BaseFeedURL, coreDataStack: self.coreDataStack)
-        
-        // feed installer installed or not
-        if self.feedInstaller.doAnyFeedsExist() {
-            populateCollectionView()
-        } else {
-            popUpInstallFeedViewController()
-        }
     }
     
     private func populateCollectionView() {
@@ -49,13 +41,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     private func popUpInstallFeedViewController() {
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InstallBaseFeedViewController") as! InstallBaseFeedViewController
-        vc.feedInstaller = self.feedInstaller
         self.present(vc, animated: true, completion: nil)
         
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shows.count ?? 0
+        return shows?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
