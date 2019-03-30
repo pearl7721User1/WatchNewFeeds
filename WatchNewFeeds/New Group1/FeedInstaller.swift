@@ -13,13 +13,15 @@ import CoreData
 class FeedInstaller {
     
     private let feedUrls: [URL]
-    var coreDataStack: CoreDataStack
+    private let coreDataStack: CoreDataStack
     private let context: NSManagedObjectContext
+    private let feedPuller: FeedPullable
     
-    init(feedUrls: [URL], coreDataStack: CoreDataStack) {
+    init(feedUrls: [URL], coreDataStack: CoreDataStack, feedPuller: FeedPullable) {
         self.feedUrls = feedUrls
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
+        self.feedPuller = feedPuller
     }
     
     func installedFeeds() -> [URL] {
@@ -35,30 +37,32 @@ class FeedInstaller {
     
     func installFeed(url: URL, completion:@escaping ((_ finished: Bool) -> Void)) {
         
-        let feedPuller = FeedPuller(feedURL: url)
-        feedPuller.pull(completion: {(showFeedTuple: ShowFeedTuple?, episodeFeedTuples: [EpisodeFeedTuple]) in
+        feedPuller.pull(completion: {(feedPullResults: [FeedPullResult]) in
             
-            if let showFeedTuple = showFeedTuple,
-                let show = self.coreDataStack.insertShow(showTuple: showFeedTuple, rssFeedUrl: url, context: self.context) {
+            if let feedPullResult = feedPullResults.first {
                 
-                var finished = true
-                do {
-                    try self.coreDataStack.insertEpisodes(episodeTuples: episodeFeedTuples, to: show, context: self.context)
-                } catch {
-                    finished = false
+                if let showFeedTuple = feedPullResult.show,
+                    let show = self.coreDataStack.insertShow(showTuple: showFeedTuple, rssFeedUrl: url, context: self.context) {
+                    
+                    var finished = true
+                    do {
+                        try self.coreDataStack.insertEpisodes(episodeTuples: feedPullResult.episodes, to: show, context: self.context)
+                    } catch {
+                        finished = false
+                    }
+                    
+                    completion(finished)
                 }
-                
-                completion(finished)
             }
         })
-        
-    }
-    
+    }    
     
     static func sampleFeedUrls() -> [URL] {
-        let BaseFeedURL: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
-        // TODO: - more feeds
+        let allEarsEnglish: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
+        let englishWeSpeak: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02pc9zn.rss")!
+        let globalNews: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02nq0gn.rss")!
+        let bbcEnglishDrama: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02pc9s1.rss")!
         
-        return [BaseFeedURL]
+        return [allEarsEnglish, englishWeSpeak, globalNews, bbcEnglishDrama]
     }
 }

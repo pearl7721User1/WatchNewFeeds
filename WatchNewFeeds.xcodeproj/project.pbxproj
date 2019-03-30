@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BE4F88EA2241FD40005295D3 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F88E82241FD40005295D3 /* ShowCell.swift */; };
-		BE4F88EB2241FD40005295D3 /* ShowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4F88E92241FD40005295D3 /* ShowCell.xib */; };
 		BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */; };
 		EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD15E21F2AE6200396729 /* AppDelegate.swift */; };
 		EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16021F2AE6200396729 /* ViewController.swift */; };
@@ -25,15 +24,17 @@
 		EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877531221D923D0071025D /* EpisodeComparator.swift */; };
 		EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877537221D927B0071025D /* SyncManagerTests.swift */; };
 		EE87753B221D945A0071025D /* FeedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE87753A221D945A0071025D /* FeedKit.framework */; };
-		EE91EB6D21F365E800E12191 /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EB6C21F365E800E12191 /* CoreDataStackTests.swift */; };
-		EEA730562237FF9100135795 /* EpisodeComparatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA730552237FF9100135795 /* EpisodeComparatorTests.swift */; };
 		EEA730582238003E00135795 /* EpisodeSampleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA730572238003E00135795 /* EpisodeSampleFactory.swift */; };
 		EEA7305A22393F5D00135795 /* FeedPullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7305922393F5D00135795 /* FeedPullerTests.swift */; };
 		EEA7305C223C06D600135795 /* FeedInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7305B223C06D600135795 /* FeedInstaller.swift */; };
+		EEA7305F2243314D00135795 /* InstallBaseFeedNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7305E2243314D00135795 /* InstallBaseFeedNavigationController.swift */; };
 		EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */; };
 		EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */; };
 		EEB7EBB721F40D4300D307CF /* Show+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */; };
 		EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB7EBB421F40D4300D307CF /* Show+CoreDataProperties.swift */; };
+		EED4EDFA224F1B3F00BC1496 /* FeedInstallerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4EDF9224F1B3F00BC1496 /* FeedInstallerTests.swift */; };
+		EED4EDFD224F1F9D00BC1496 /* MockFeedPuller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4EDFC224F1F9D00BC1496 /* MockFeedPuller.swift */; };
+		EEEC2FFD224361BD00402FA3 /* InstallFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC2FFC224361BD00402FA3 /* InstallFeedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		BE4F88E82241FD40005295D3 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
-		BE4F88E92241FD40005295D3 /* ShowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowCell.xib; sourceTree = "<group>"; };
 		BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallBaseFeedViewController.swift; sourceTree = "<group>"; };
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1FD15E21F2AE6200396729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,10 +87,14 @@
 		EEA730572238003E00135795 /* EpisodeSampleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeSampleFactory.swift; sourceTree = "<group>"; };
 		EEA7305922393F5D00135795 /* FeedPullerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPullerTests.swift; sourceTree = "<group>"; };
 		EEA7305B223C06D600135795 /* FeedInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedInstaller.swift; sourceTree = "<group>"; };
+		EEA7305E2243314D00135795 /* InstallBaseFeedNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallBaseFeedNavigationController.swift; sourceTree = "<group>"; };
 		EEB7EBB121F40D4300D307CF /* Episode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Episode+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EEB7EBB221F40D4300D307CF /* Episode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Episode+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EEB7EBB321F40D4300D307CF /* Show+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EEB7EBB421F40D4300D307CF /* Show+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EED4EDF9224F1B3F00BC1496 /* FeedInstallerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedInstallerTests.swift; sourceTree = "<group>"; };
+		EED4EDFC224F1F9D00BC1496 /* MockFeedPuller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeedPuller.swift; sourceTree = "<group>"; };
+		EEEC2FFC224361BD00402FA3 /* InstallFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallFeedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,9 +160,9 @@
 			children = (
 				EE20F97D2220EF1C0006225D /* Operations */,
 				EE877531221D923D0071025D /* EpisodeComparator.swift */,
-				EE87752F221D923D0071025D /* FeedPuller.swift */,
 				EE877530221D923D0071025D /* SyncManager.swift */,
 				EEA7305B223C06D600135795 /* FeedInstaller.swift */,
+				EE87752F221D923D0071025D /* FeedPuller.swift */,
 			);
 			name = SyncManager;
 			path = "New Group1";
@@ -183,12 +187,14 @@
 		EE91EB6B21F365E800E12191 /* WatchNewFeedsTests */ = {
 			isa = PBXGroup;
 			children = (
+				EED4EDFB224F1EFC00BC1496 /* Mocks */,
 				EE91EB6C21F365E800E12191 /* CoreDataStackTests.swift */,
 				EE877537221D927B0071025D /* SyncManagerTests.swift */,
 				EE20F9B0222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift */,
 				EEA730552237FF9100135795 /* EpisodeComparatorTests.swift */,
-				EEA7305922393F5D00135795 /* FeedPullerTests.swift */,
 				EEA730572238003E00135795 /* EpisodeSampleFactory.swift */,
+				EEA7305922393F5D00135795 /* FeedPullerTests.swift */,
+				EED4EDF9224F1B3F00BC1496 /* FeedInstallerTests.swift */,
 				EE91EB6E21F365E800E12191 /* Info.plist */,
 			);
 			path = WatchNewFeedsTests;
@@ -198,11 +204,20 @@
 			isa = PBXGroup;
 			children = (
 				EE1FD16021F2AE6200396729 /* ViewController.swift */,
+				EEA7305E2243314D00135795 /* InstallBaseFeedNavigationController.swift */,
 				BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */,
 				BE4F88E82241FD40005295D3 /* ShowCell.swift */,
-				BE4F88E92241FD40005295D3 /* ShowCell.xib */,
+				EEEC2FFC224361BD00402FA3 /* InstallFeedCell.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EED4EDFB224F1EFC00BC1496 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				EED4EDFC224F1F9D00BC1496 /* MockFeedPuller.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,7 +306,6 @@
 			files = (
 				EE1FD16C21F2AE6200396729 /* LaunchScreen.storyboard in Resources */,
 				EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */,
-				BE4F88EB2241FD40005295D3 /* ShowCell.xib in Resources */,
 				EE1FD16421F2AE6200396729 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +329,7 @@
 				EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */,
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
 				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
+				EEEC2FFD224361BD00402FA3 /* InstallFeedCell.swift in Sources */,
 				EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */,
 				BE4F88EA2241FD40005295D3 /* ShowCell.swift in Sources */,
 				EE20F979222034560006225D /* FeedPullOperation.swift in Sources */,
@@ -324,6 +339,7 @@
 				EE877532221D923D0071025D /* FeedPuller.swift in Sources */,
 				EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */,
 				EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */,
+				EEA7305F2243314D00135795 /* InstallBaseFeedNavigationController.swift in Sources */,
 				EEA7305C223C06D600135795 /* FeedInstaller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,11 +349,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEA7305A22393F5D00135795 /* FeedPullerTests.swift in Sources */,
+				EED4EDFD224F1F9D00BC1496 /* MockFeedPuller.swift in Sources */,
 				EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */,
 				EEA730582238003E00135795 /* EpisodeSampleFactory.swift in Sources */,
 				EE20F9B1222D657F0006225D /* NSManagedObjectsDictionaryInitTests.swift in Sources */,
-				EE91EB6D21F365E800E12191 /* CoreDataStackTests.swift in Sources */,
-				EEA730562237FF9100135795 /* EpisodeComparatorTests.swift in Sources */,
+				EED4EDFA224F1B3F00BC1496 /* FeedInstallerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

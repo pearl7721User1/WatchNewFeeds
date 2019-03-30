@@ -8,18 +8,57 @@
 
 import UIKit
 
-class InstallBaseFeedViewController: UIViewController {
-
-    private var feedInstaller: FeedInstaller!
-    var coreDataStack: CoreDataStack!
+class InstallBaseFeedViewController: UIViewController, UITableViewDataSource {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    var coreDataStack: CoreDataStack!
+    private lazy var feedInstaller: FeedInstaller = {
         let feedUrls = FeedInstaller.sampleFeedUrls()
-        self.feedInstaller = FeedInstaller(feedUrls: feedUrls, coreDataStack: coreDataStack)
+        return FeedInstaller(feedUrls: feedUrls, coreDataStack: coreDataStack, feedPuller: FeedPuller(feedUrls: feedUrls))        
+    }()
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    private lazy var existingFeeds: [URL] = {
+        return self.feedInstaller.existingFeeds()
+    }()
+    
+    private lazy var installedFeeds: [URL] = {
+        return self.feedInstaller.installedFeeds()
+    }()
+    
+    
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return existingFeeds.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: InstallFeedCell.identifier(), for: indexPath) as! InstallFeedCell
+        
+        let rssFeedUrl = existingFeeds[indexPath.row]
+        
+        let title = rssFeedUrl.absoluteString
+        let isInstalled = installedFeeds.contains(rssFeedUrl)
+        
+        var buttonAction: (() -> Void)?
+        if isInstalled == false {
+            
+            buttonAction = {
+                print("isgoingToInstall")
+                self.feedInstaller.installFeed(url: rssFeedUrl) { (finished) in
+                    print("installed")
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+            
+        }
+        
+        cell.configure(title: title, buttonAction: buttonAction)
 
+        return cell
+    }
 }

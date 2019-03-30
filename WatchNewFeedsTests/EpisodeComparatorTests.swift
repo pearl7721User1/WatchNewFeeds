@@ -53,7 +53,7 @@ class EpisodeComparatorTests: XCTestCase {
         let feedEpisodeDictArray = EpisodeSampleFactory.sampleFeedEpisodesForJan2018()
         let episodeTuples = feedEpisodeDictArray.flatMap{ try? Episode.deserialized(dict: $0) }
         
-        guard (try? coreDataStack.insertEpisodes(episodeTuples: episodeTuples, context: self.backgroundContext)) != nil else {
+        guard (try? coreDataStack.insertEpisodes(episodeTuples: episodeTuples, to: <#Show#>, context: self.backgroundContext)) != nil else {
             XCTFail()
             return
         }

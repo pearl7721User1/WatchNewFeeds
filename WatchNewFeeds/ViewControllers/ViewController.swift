@@ -14,44 +14,64 @@ import CoreData
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    var allShowsFetchRequest: NSFetchRequest<Show>
+    let allShowsFetchRequest: NSFetchRequest<Show>
     var coreDataStack: CoreDataStack!
-    var context: NSManagedObjectContext!
-    var feedInstaller: FeedInstaller!
+    lazy var context: NSManagedObjectContext = {
+       return coreDataStack.persistentContainer.viewContext
+    }()
     
-    var shows: [Show]?
-    
+    var shows: [Show]!
     
     required init?(coder aDecoder: NSCoder) {
-        self.allShowsFetchRequest = Show.fetchRequest()
+        allShowsFetchRequest = Show.fetchRequest()
         super.init(coder: aDecoder)        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.shows = coreDataStack.fetchAllShows(context: context)
     }
     
-    private func populateCollectionView() {
-        
-        self.shows = coreDataStack.fetchAllShows(context: context)
-        collectionView.reloadData()
-    }
     
     private func popUpInstallFeedViewController() {
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InstallBaseFeedViewController") as! InstallBaseFeedViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InstallBaseFeedNavigationController") as! InstallBaseFeedNavigationController
+        vc.coreDataStack = coreDataStack
         self.present(vc, animated: true, completion: nil)
         
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shows?.count ?? 0
+        return shows.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier(), for: indexPath) as! ShowCell
+        
+        let show = shows[indexPath.row]
+        
+        var image: UIImage? {
+            if let imageData = show.logoImage,
+                let image = UIImage(data: imageData as Data) {
+                return image
+            } else {
+                return nil
+            }
+        }
+        
+        showCell.configure(image: image, showTitle: show.title ?? "", availableEpisodes: show.episodes?.count ?? 0)
+            
+        return showCell
+        
     }
     
+    @IBAction func feedInstallerButtonTapped(_ sender: UIBarButtonItem) {
+        popUpInstallFeedViewController()
+    }
+    
+    @IBAction func syncButtonTapped(_ sender: UIBarButtonItem) {
+        
+    }
 }
 

@@ -31,24 +31,31 @@ class SyncManager {
         
     }
     
-    
-    private func sync(for show:Show) throws {
+    private func sync(for shows:[Show], completion:(_ error: SyncManager.error?) -> Void) {
         
-        let episodes = coreDataStack.fetchAllEpisodes(context: context)
         
-        guard let rssFeedUrlString = show.rssFeedUrl,
-            let rssFeedUrl = URL(string:rssFeedUrlString) else {
-            throw SyncManager.error.invalidRssFeedUrl
-        }
+        // TODO: - errors
+        //invalidRssFeedUrls(from: shows)
+        let rssFeedUrls = shows.compactMap{$0.rssFeedUrl}.compactMap{URL(string:$0)}
+        let feedPuller = FeedPuller(feedUrls: rssFeedUrls)
         
-        let feedPuller = FeedPuller(feedURL: rssFeedUrl)
-        
-        feedPuller.pull(completion: { (showTuple, episodeTuples) in
+        feedPuller.pull(completion: { (feedPullResults: [FeedPullResult]) in
             
-            let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
-            self.handle(result : comparatorResult, show:show)
+            
+            /*
+            
+            
+            for (i,feedPullResult) in feedPullResults.enumerated() {
+                
+                let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
+                self.handle(result : comparatorResult, show:show)
+                
+            }
+            */
+            
             
         })
+        
     }
     
     private func handle(result: EpisodeComparatorResult, show: Show) {
@@ -57,4 +64,20 @@ class SyncManager {
         try? self.coreDataStack.updateEpisodes(episodeTuples: result.updateRequired, context: self.context)
         try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, to: show, context: self.context)
     }
+    
+    private func invalidRssFeedUrls(from shows:[Show]) -> [String] {
+        
+        var urlStrings = [String]()
+        for (_,v) in shows.enumerated() {
+            
+            guard let rssFeedUrlString = v.rssFeedUrl,
+                let _ = URL(string: rssFeedUrlString) else {
+                    
+                urlStrings.append(v.rssFeedUrl ?? "")
+                continue
+            }
+        }
+        return urlStrings
+    }
+    
 }

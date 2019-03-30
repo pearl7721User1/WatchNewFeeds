@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         self.coreDataStack = CoreDataStack()
+        if let rootNavigationController = self.window?.rootViewController as? UINavigationController,
+            let viewController = rootNavigationController.viewControllers[0] as? ViewController {
+            
+            viewController.coreDataStack = self.coreDataStack
+        }
         
         return true
     }

@@ -14,23 +14,17 @@ import CoreData
 
 class FeedPullerTests: XCTestCase {
 
-    var feedPuller: FeedPuller!
+    var feedPuller = FeedPuller(feedUrls: FeedInstaller.sampleFeedUrls())
     
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        self.feedPuller = FeedPuller(feedURL: URL(string:"http:allearsenglish.libsyn.com/rss")!)
-        
-    }
-
     func testPull() {
         
         let expectation = XCTestExpectation(description: "pull operation")
         
-        self.feedPuller.pull { (showTuple: ShowFeedTuple?, episodeTuples: [EpisodeFeedTuple]) in
-            
+        self.feedPuller.pull(completion: { (feedPullResults: [FeedPullResult]) in
+            XCTAssert(feedPullResults.count == FeedInstaller.sampleFeedUrls().count)
             expectation.fulfill()
-        }
+        })
+        
         
         wait(for: [expectation], timeout: 10.0)
     }

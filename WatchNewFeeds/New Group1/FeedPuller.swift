@@ -9,19 +9,21 @@
 import UIKit
 import CoreData
 
-class FeedPuller: NSObject {
+protocol FeedPullable {
+    func pull(completion:@escaping (_ feedPullResult: [FeedPullResult]) -> Void)
+}
+
+class FeedPuller: NSObject, FeedPullable {
     
-    private let feedPullOperation: FeedPullOperation
+    private let feedPullOperations: [FeedPullOperation]
     @objc private var queue: OperationQueue = OperationQueue()
     private var observationForQueue: NSKeyValueObservation?
     
-    typealias FeedPullerCompletion = (_ show: ShowFeedTuple?, _ episodes: [EpisodeFeedTuple]) -> Void
-    
-    init(feedURL: URL) {
-        self.feedPullOperation = FeedPullOperation(feedUrl: feedURL)
+    init(feedUrls: [URL]) {
+        self.feedPullOperations = feedUrls.map{FeedPullOperation(feedUrl: $0)}
     }
     
-    func pull(completion:@escaping FeedPullerCompletion) {
+    func pull(completion:@escaping (_ feedPullResult: [FeedPullResult]) -> Void) {
         
         self.observationForQueue = observe(\.queue.operationCount,
                                            options: [.new], changeHandler:
@@ -29,13 +31,19 @@ class FeedPuller: NSObject {
                 
                 if (change.newValue == 0) {
                     
-                    completion(self.feedPullOperation.showTuple, self.feedPullOperation.episodeTuples)
+                    let results = self.feedPullOperations.map{FeedPullResult(show: $0.showTuple, episodes: $0.episodeTuples)}
+                    completion(results)
                 }
         })
         
-        queue.addOperation(feedPullOperation)
+        queue.addOperations(feedPullOperations, waitUntilFinished: false)
         
     }
     
     
+}
+
+struct FeedPullResult {
+    let show: ShowFeedTuple?
+    let episodes: [EpisodeFeedTuple]
 }
