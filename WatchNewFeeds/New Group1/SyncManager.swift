@@ -11,51 +11,49 @@ import CoreData
 
 class SyncManager {
 
-    enum error: Error {
-        case invalidRssFeedUrl
-    }
-    
     // TODO: - show conforms a protocol
-    private let shows: [Show]
     private var coreDataStack: CoreDataStack
     private var context: NSManagedObjectContext
     
 //    var feedPuller: FeedPuller?
     var episodeComparator = EpisodeComparator()
     
-    init(coreDataStack: CoreDataStack, shows: [Show]) {
+    init(coreDataStack: CoreDataStack) {
         
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
-        self.shows = shows
+    }
+    
+    func sync() {
+        // fetch all shows
+        let installedShows = self.coreDataStack.fetchAllShows(context: context)
+        
+        for (_, installedShow) in installedShows.enumerated() {
+            
+            sync(for: installedShow) { (feedPullResults: [FeedPullResult]?) in
+                
+                if let feedPullResults = feedPullResults,
+                    let firstPullResult = feedPullResults.first,
+                    let _ = firstPullResult.show,
+                    let episodes = installedShow.episodes as? Set<Episode> {
+                    
+                    let comparatorResult = self.episodeComparator.compare(episodes: Array(episodes), episodeTuples: firstPullResult.episodes)
+                    
+                    self.handle(result: comparatorResult, show: installedShow)
+                }
+            }
+        }
         
     }
     
-    private func sync(for shows:[Show], completion:(_ error: SyncManager.error?) -> Void) {
+    private func sync(for show:Show, completion: @escaping ((_ feedPullResult: [FeedPullResult]?) -> Void)) {
         
-        
-        // TODO: - errors
-        //invalidRssFeedUrls(from: shows)
-        let rssFeedUrls = shows.compactMap{$0.rssFeedUrl}.compactMap{URL(string:$0)}
-        let feedPuller = FeedPuller(feedUrls: rssFeedUrls)
-        
-        feedPuller.pull(completion: { (feedPullResults: [FeedPullResult]) in
-            
-            
-            /*
-            
-            
-            for (i,feedPullResult) in feedPullResults.enumerated() {
-                
-                let comparatorResult = self.episodeComparator.compare(episodes: episodes, episodeTuples: episodeTuples)
-                self.handle(result : comparatorResult, show:show)
-                
-            }
-            */
-            
-            
-        })
-        
+        if let rssFeedUrl = URL(string:show.rssFeedUrl ?? "") {
+            let feedPuller = FeedPuller(feedUrls: [rssFeedUrl])
+            feedPuller.pull(completion: completion)
+        } else {
+            completion(nil)
+        }
     }
     
     private func handle(result: EpisodeComparatorResult, show: Show) {
