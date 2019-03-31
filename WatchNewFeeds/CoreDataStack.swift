@@ -184,18 +184,12 @@ class CoreDataStack {
         show.link = showTuple.link
         show.rssFeedUrl = rssFeedUrl.absoluteString
         
-        DispatchQueue.global().async {
-            if let url = URL(string: showTuple.logoImageUrlString),
-                let data = try? Data(contentsOf: url) as NSData {
-                show.logoImage = data
-                
-                try? context.save()
-                
-                // reset context
-                context.reset()
-            }
+        // TODO: - asynchronously
+        if let url = URL(string: showTuple.logoImageUrlString),
+            let data = try? Data(contentsOf: url) as NSData {
+            show.logoImage = data
         }
-        
+
         show.pubDate = showTuple.pubDate as NSDate
 
         // save context
@@ -205,6 +199,7 @@ class CoreDataStack {
             return nil
         }
         
+        context.reset()
         // do not reset context at this time
         return show
     }

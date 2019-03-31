@@ -31,12 +31,28 @@ class InstallFeedCell: UITableViewCell {
     func configure(title: String, buttonAction: (()->Void)?) {
         
         self.titleLabel.text = title
-        self.button.isEnabled = (buttonAction != nil)
+        
+        if buttonAction != nil {
+            self.button.isEnabled = true
+            self.button.setTitle("Install", for: .normal)
+            
+        } else {
+            self.button.isEnabled = false
+            self.button.setTitle("Installed", for: .normal)
+        }
+        
+        self.buttonAction = buttonAction
         self.button.addTarget(self, action: #selector(buttonActionSelector), for: .touchUpInside)
+    }
+    
+    private func temporarilyDisableButton() {
+        self.button.isEnabled = false
+        self.button.setTitle("Installing", for: .normal)
     }
     
     @objc func buttonActionSelector(_ sender: UIButton) {
         if let buttonAction = self.buttonAction {
+            temporarilyDisableButton()
             buttonAction()
         }
     }

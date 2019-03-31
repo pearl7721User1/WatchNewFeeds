@@ -13,18 +13,18 @@ class InstallBaseFeedViewController: UIViewController, UITableViewDataSource {
     var coreDataStack: CoreDataStack!
     private lazy var feedInstaller: FeedInstaller = {
         let feedUrls = FeedInstaller.sampleFeedUrls()
-        return FeedInstaller(feedUrls: feedUrls, coreDataStack: coreDataStack, feedPuller: FeedPuller(feedUrls: feedUrls))        
+        return FeedInstaller(feedUrls: feedUrls, coreDataStack: coreDataStack)
     }()
     
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var existingFeeds: [URL] = {
+    private var existingFeeds: [URL] {
         return self.feedInstaller.existingFeeds()
-    }()
+    }
     
-    private lazy var installedFeeds: [URL] = {
+    private var installedFeeds: [URL] {
         return self.feedInstaller.installedFeeds()
-    }()
+    }
     
     
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
@@ -49,9 +49,13 @@ class InstallBaseFeedViewController: UIViewController, UITableViewDataSource {
             
             buttonAction = {
                 print("isgoingToInstall")
+                
                 self.feedInstaller.installFeed(url: rssFeedUrl) { (finished) in
                     print("installed")
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                    
                 }
             }
             

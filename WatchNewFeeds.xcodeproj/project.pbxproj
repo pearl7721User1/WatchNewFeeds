@@ -10,7 +10,7 @@
 		BE4F88EA2241FD40005295D3 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F88E82241FD40005295D3 /* ShowCell.swift */; };
 		BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */; };
 		EE1FD15F21F2AE6200396729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD15E21F2AE6200396729 /* AppDelegate.swift */; };
-		EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16021F2AE6200396729 /* ViewController.swift */; };
+		EE1FD16121F2AE6200396729 /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16021F2AE6200396729 /* ShowListViewController.swift */; };
 		EE1FD16421F2AE6200396729 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16221F2AE6200396729 /* Main.storyboard */; };
 		EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE1FD16521F2AE6200396729 /* WatchNewFeeds.xcdatamodeld */; };
 		EE1FD16921F2AE6200396729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1FD16821F2AE6200396729 /* Assets.xcassets */; };
@@ -24,6 +24,7 @@
 		EE877534221D923D0071025D /* EpisodeComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877531221D923D0071025D /* EpisodeComparator.swift */; };
 		EE877538221D927B0071025D /* SyncManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE877537221D927B0071025D /* SyncManagerTests.swift */; };
 		EE87753B221D945A0071025D /* FeedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE87753A221D945A0071025D /* FeedKit.framework */; };
+		EE946F2F2250584700CD7994 /* ShowListViewUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE946F2E2250584700CD7994 /* ShowListViewUpdateHelper.swift */; };
 		EEA730582238003E00135795 /* EpisodeSampleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA730572238003E00135795 /* EpisodeSampleFactory.swift */; };
 		EEA7305A22393F5D00135795 /* FeedPullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7305922393F5D00135795 /* FeedPullerTests.swift */; };
 		EEA7305C223C06D600135795 /* FeedInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA7305B223C06D600135795 /* FeedInstaller.swift */; };
@@ -66,7 +67,7 @@
 		BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallBaseFeedViewController.swift; sourceTree = "<group>"; };
 		EE1FD15B21F2AE6200396729 /* WatchNewFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchNewFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1FD15E21F2AE6200396729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EE1FD16021F2AE6200396729 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EE1FD16021F2AE6200396729 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowListViewController.swift; sourceTree = "<group>"; };
 		EE1FD16321F2AE6200396729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE1FD16621F2AE6200396729 /* WatchNewFeeds.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WatchNewFeeds.xcdatamodel; sourceTree = "<group>"; };
 		EE1FD16821F2AE6200396729 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		EE91EB6A21F365E800E12191 /* WatchNewFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchNewFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE91EB6C21F365E800E12191 /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
 		EE91EB6E21F365E800E12191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE946F2E2250584700CD7994 /* ShowListViewUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowListViewUpdateHelper.swift; sourceTree = "<group>"; };
 		EEA730552237FF9100135795 /* EpisodeComparatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeComparatorTests.swift; sourceTree = "<group>"; };
 		EEA730572238003E00135795 /* EpisodeSampleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeSampleFactory.swift; sourceTree = "<group>"; };
 		EEA7305922393F5D00135795 /* FeedPullerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPullerTests.swift; sourceTree = "<group>"; };
@@ -203,10 +205,11 @@
 		EEA7305D223CA3B900135795 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				EE1FD16021F2AE6200396729 /* ViewController.swift */,
+				EE1FD16021F2AE6200396729 /* ShowListViewController.swift */,
+				EE946F2E2250584700CD7994 /* ShowListViewUpdateHelper.swift */,
+				BE4F88E82241FD40005295D3 /* ShowCell.swift */,
 				EEA7305E2243314D00135795 /* InstallBaseFeedNavigationController.swift */,
 				BE718EBF22407175008080D4 /* InstallBaseFeedViewController.swift */,
-				BE4F88E82241FD40005295D3 /* ShowCell.swift */,
 				EEEC2FFC224361BD00402FA3 /* InstallFeedCell.swift */,
 			);
 			path = ViewControllers;
@@ -326,7 +329,7 @@
 			files = (
 				EEB7EBB721F40D4300D307CF /* Show+CoreDataClass.swift in Sources */,
 				EEB7EBB621F40D4300D307CF /* Episode+CoreDataProperties.swift in Sources */,
-				EE1FD16121F2AE6200396729 /* ViewController.swift in Sources */,
+				EE1FD16121F2AE6200396729 /* ShowListViewController.swift in Sources */,
 				EE1FD16721F2AE6200396729 /* WatchNewFeeds.xcdatamodeld in Sources */,
 				EEB7EBB821F40D4300D307CF /* Show+CoreDataProperties.swift in Sources */,
 				EEEC2FFD224361BD00402FA3 /* InstallFeedCell.swift in Sources */,
@@ -338,6 +341,7 @@
 				BE718EC022407175008080D4 /* InstallBaseFeedViewController.swift in Sources */,
 				EE877532221D923D0071025D /* FeedPuller.swift in Sources */,
 				EE63987C21F2F49500846F5C /* CoreDataStack.swift in Sources */,
+				EE946F2F2250584700CD7994 /* ShowListViewUpdateHelper.swift in Sources */,
 				EEB7EBB521F40D4300D307CF /* Episode+CoreDataClass.swift in Sources */,
 				EEA7305F2243314D00135795 /* InstallBaseFeedNavigationController.swift in Sources */,
 				EEA7305C223C06D600135795 /* FeedInstaller.swift in Sources */,

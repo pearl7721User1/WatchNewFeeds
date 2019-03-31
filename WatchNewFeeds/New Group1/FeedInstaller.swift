@@ -15,9 +15,9 @@ class FeedInstaller {
     private let feedUrls: [URL]
     private let coreDataStack: CoreDataStack
     private let context: NSManagedObjectContext
-    private let feedPuller: FeedPullable
+    private var feedPuller: FeedPullable?
     
-    init(feedUrls: [URL], coreDataStack: CoreDataStack, feedPuller: FeedPullable) {
+    init(feedUrls: [URL], coreDataStack: CoreDataStack, feedPuller: FeedPullable? = nil) {
         self.feedUrls = feedUrls
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
@@ -37,7 +37,17 @@ class FeedInstaller {
     
     func installFeed(url: URL, completion:@escaping ((_ finished: Bool) -> Void)) {
         
-        feedPuller.pull(completion: {(feedPullResults: [FeedPullResult]) in
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        }
+        
+        let theFeedPuller = feedPuller != nil ? feedPuller : FeedPuller.init(feedUrls: [url])
+        
+        theFeedPuller!.pull(completion: {(feedPullResults: [FeedPullResult]) in
+            
+            DispatchQueue.main.async {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }
             
             if let feedPullResult = feedPullResults.first {
                 

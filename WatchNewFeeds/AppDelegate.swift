@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.coreDataStack = CoreDataStack()
         if let rootNavigationController = self.window?.rootViewController as? UINavigationController,
-            let viewController = rootNavigationController.viewControllers[0] as? ViewController {
+            let viewController = rootNavigationController.viewControllers[0] as? ShowListViewController {
             
             viewController.coreDataStack = self.coreDataStack
         }

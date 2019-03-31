@@ -11,7 +11,7 @@ import CoreData
 
 
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ShowListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     let allShowsFetchRequest: NSFetchRequest<Show>
@@ -30,8 +30,36 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         self.shows = coreDataStack.fetchAllShows(context: context)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextObjectsDidChange), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: nil)
     }
     
+    @objc func contextObjectsDidChange(notification:Notification) {
+        
+        let listUpdateHelper = ShowListViewUpdateHelper()
+        if let viewUpdateInfo = listUpdateHelper.showListViewUpdateInfo(notification: notification, shows: self.shows) {
+            
+            self.shows = viewUpdateInfo.newShows
+            
+            DispatchQueue.main.async {
+                if let insertRequired = viewUpdateInfo.insertRequired {
+                    self.collectionView.insertItems(at: insertRequired)
+                }
+                if let updateRequired = viewUpdateInfo.updateRequired {
+                    self.collectionView.reloadItems(at: updateRequired)
+                }
+                if let deleteRequired = viewUpdateInfo.deleteRequired {
+                    self.collectionView.deleteItems(at: deleteRequired)
+                }
+            }
+            
+        }
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
+    }
     
     private func popUpInstallFeedViewController() {
         
