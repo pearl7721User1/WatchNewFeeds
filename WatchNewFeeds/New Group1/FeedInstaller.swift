@@ -41,22 +41,17 @@ class FeedInstaller {
         
         theFeedPuller!.pull(completion: {(feedPullResults: [FeedPullResult]) in
             
-            
-            if let feedPullResult = feedPullResults.first {
+            if let feedPullResult = feedPullResults.first,
+                let showFeedTuple = feedPullResult.show {
                 
-                if let showFeedTuple = feedPullResult.show,
-                    let show = self.coreDataStack.insertShow(showTuple: showFeedTuple, rssFeedUrl: url, context: self.context) {
+                    var finished = false
                     
-                    var finished = true
-                    do {
-                        try self.coreDataStack.insertEpisodes(episodeTuples: feedPullResult.episodes, to: show, context: self.context)
-                    } catch {
-                        finished = false
+                    if let _ = try? self.coreDataStack.insertShow(showTuple: showFeedTuple, episodeTuples: feedPullResult.episodes, rssFeedUrl: url, context: self.context) {
+                        finished = true
                     }
                     
                     completion(finished)
-                }
-            }
+            }            
         })
     }    
     

@@ -121,6 +121,21 @@ class CoreDataStack {
     
     func insertEpisodes(episodeTuples: [EpisodeFeedTuple], to show:Show, context: NSManagedObjectContext) throws {
         
+        _ = self.episodes(episodeTuples: episodeTuples, to: show, context: context)
+        
+        // save context
+        do {
+            try context.save()
+        } catch {
+            throw error
+        }
+        
+    }
+    
+    private func episodes(episodeTuples: [EpisodeFeedTuple], to show:Show, context:NSManagedObjectContext) -> [Episode] {
+        
+        var episodes = [Episode]()
+        
         for (_,episodePropertiesTuple) in episodeTuples.enumerated() {
             
             let episode = Episode(context: context)
@@ -133,18 +148,14 @@ class CoreDataStack {
             episode.pubDate = episodePropertiesTuple.pubDate as NSDate
             episode.fileSize = episodePropertiesTuple.fileSize
             episode.show = show
+            
+            episodes.append(episode)
         }
         
-        // save context
-        do {
-            try context.save()
-        } catch {
-            throw error
-        }
-        
+        return episodes
     }
     
-    func insertShow(showTuple: ShowFeedTuple, rssFeedUrl: URL, context: NSManagedObjectContext) -> Show? {
+    func insertShow(showTuple: ShowFeedTuple, episodeTuples: [EpisodeFeedTuple], rssFeedUrl: URL, context: NSManagedObjectContext) throws {
         
         let show = Show(context: context)
 
@@ -162,15 +173,15 @@ class CoreDataStack {
         }
 
         show.pubDate = showTuple.pubDate as NSDate
+        _ = self.episodes(episodeTuples: episodeTuples, to: show, context: context)
 
         // save context
         do {
             try context.save()
         } catch {
-            return nil
+            throw error
         }
         
-        return show
     }
     
     

@@ -26,15 +26,16 @@ class ShowListViewUpdateHelper: NSObject {
         
         var newShows = shows
         
-        if let insertedSet = userInfo[NSInsertedObjectsKey] as? Set<Show> {
+        if let insertedSet = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
 
-            // TODO: -
+            let insertNeededShows = Array(insertedSet).filter{$0.isKind(of: Show.self)} as! [Show]
+            
+                // TODO: - doesn't need to be permanent at this point?
 //            let insertNeeded = Array(insertedSet).filter{$0.objectID.isTemporaryID == false}
-            let insertNeeded = Array(insertedSet)
             
             let section = 0
             let newShowsCountBeforeInsert = newShows.count
-            newShows.append(contentsOf: insertNeeded)
+            newShows.append(contentsOf: insertNeededShows)
             let newShowsCountAfterInsert = newShows.count
             
             var insertedIndexPaths = [IndexPath]()
@@ -43,9 +44,11 @@ class ShowListViewUpdateHelper: NSObject {
             }
             
             return ShowListViewUpdateInfo(insertRequired: insertedIndexPaths, updateRequired:nil, deleteRequired: nil, newShows: newShows)
-        } else if let updatedSet = userInfo[NSUpdatedObjectsKey] as? Set<Show> {
+        } else if let updatedSet = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
             
-            let mightBeUpdated = Array(updatedSet).filter{$0.objectID.isTemporaryID == false}
+//            let mightBeUpdated = Array(updatedSet).filter{$0.objectID.isTemporaryID == false}
+            let mightBeUpdated = Array(updatedSet).filter{$0.isKind(of: Show.self)} as! [Show]
+            
             var updateNeededIndexPaths = [IndexPath]()
             let section = 0
             
@@ -69,7 +72,8 @@ class ShowListViewUpdateHelper: NSObject {
             
         } else if let deletedSet = userInfo[NSDeletedObjectsKey] as? Set<Show> {
             
-            let mightBeDeleted = Array(deletedSet).filter{$0.objectID.isTemporaryID == false}
+//            let mightBeDeleted = Array(deletedSet).filter{$0.objectID.isTemporaryID == false}
+            let mightBeDeleted = Array(deletedSet).filter{$0.isKind(of: Show.self)} as! [Show]
             var deletedNeededIndexes = [Int]()
             
             for (i,v) in shows.enumerated() {
