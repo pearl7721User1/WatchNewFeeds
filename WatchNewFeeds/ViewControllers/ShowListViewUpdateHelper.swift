@@ -28,7 +28,9 @@ class ShowListViewUpdateHelper: NSObject {
         
         if let insertedSet = userInfo[NSInsertedObjectsKey] as? Set<Show> {
 
-            let insertNeeded = Array(insertedSet).filter{$0.objectID.isTemporaryID == false}
+            // TODO: -
+//            let insertNeeded = Array(insertedSet).filter{$0.objectID.isTemporaryID == false}
+            let insertNeeded = Array(insertedSet)
             
             let section = 0
             let newShowsCountBeforeInsert = newShows.count

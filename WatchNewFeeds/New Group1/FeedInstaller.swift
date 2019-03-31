@@ -37,17 +37,10 @@ class FeedInstaller {
     
     func installFeed(url: URL, completion:@escaping ((_ finished: Bool) -> Void)) {
         
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
-        
         let theFeedPuller = feedPuller != nil ? feedPuller : FeedPuller.init(feedUrls: [url])
         
         theFeedPuller!.pull(completion: {(feedPullResults: [FeedPullResult]) in
             
-            DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            }
             
             if let feedPullResult = feedPullResults.first {
                 

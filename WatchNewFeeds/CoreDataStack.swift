@@ -16,10 +16,6 @@ protocol FeedSetup {
 
 class CoreDataStack {
     
-    enum error: Error {
-        case executionError(guids: [String])
-    }
-    
     convenience init(with persistentContainer:NSPersistentContainer) {
         self.init()
         self.persistentContainer = persistentContainer
@@ -40,9 +36,7 @@ class CoreDataStack {
     
     func deleteEpisodes(guidArray: [String], context: NSManagedObjectContext) throws {
         
-        // TODO: - delete
-        var failedGuidList = [String]()
-        
+        var deletedObjectIds = [NSManagedObjectID]()
         context.performAndWait {
             
             for (_,guid) in guidArray.enumerated() {
@@ -53,43 +47,36 @@ class CoreDataStack {
                     let fetchResult = try context.fetch(fetchRequest)
                     mightBeEpisode = fetchResult.first
                 } catch {
-                    failedGuidList.append(guid)
                     continue
                 }
                 
                 guard let episodeOfInterest = mightBeEpisode else {
-                    failedGuidList.append(guid)
                     continue
                 }
                 
                 context.delete(episodeOfInterest)
+                deletedObjectIds.append(episodeOfInterest.objectID)
                 
-                // save context
-                do {
-                    try context.save()
-                } catch {
-                    failedGuidList.append(guid)
-                    continue
-                }
-                
-                // notify changes
-                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey:[episodeOfInterest.objectID]],into: [self.persistentContainer.viewContext])
             }
             
         }
         
-        if failedGuidList.count > 0 {
-            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
-            throw theError
+        // save context
+        do {
+            try context.save()
+        } catch {
+            throw error
         }
         
-        context.reset()
+        // notify changes
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey:deletedObjectIds], into: [self.persistentContainer.viewContext])
+        
     }
     
     func updateEpisodes(episodeTuples: [EpisodeFeedTuple], context: NSManagedObjectContext) throws {
         
-        // TODO: - delete
-        var failedGuidList = [String]()
+        
+        var updatedObjectIds = [NSManagedObjectID]()
         
         context.performAndWait {
             
@@ -101,12 +88,10 @@ class CoreDataStack {
                     let fetchResult = try context.fetch(fetchRequest)
                     mightBeEpisode = fetchResult.first
                 } catch {
-                    failedGuidList.append(episodePropertiesTuple.guid)
                     continue
                 }
                 
                 guard let episodeOfInterest = mightBeEpisode else {
-                    failedGuidList.append(episodePropertiesTuple.guid)
                     continue
                 }
                 
@@ -116,32 +101,25 @@ class CoreDataStack {
                 episodeOfInterest.pubDate = episodePropertiesTuple.pubDate as NSDate
                 episodeOfInterest.title = episodePropertiesTuple.title
                 
-                // save context
-                do {
-                    try context.save()
-                } catch {
-                    failedGuidList.append(episodePropertiesTuple.guid)
-                    continue
-                }
-                
-                // notify changes
-                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSUpdatedObjectsKey:[episodeOfInterest.objectID]],into: [self.persistentContainer.viewContext])
-                
+                updatedObjectIds.append(episodeOfInterest.objectID)
             }
             
         }
         
-        if failedGuidList.count > 0 {
-            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
-            throw theError
+        // save context
+        do {
+            try context.save()
+        } catch {
+            throw error
         }
         
-        context.reset()
+        // notify changes
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSUpdatedObjectsKey:updatedObjectIds],into: [self.persistentContainer.viewContext])
+        
+        
     }
     
     func insertEpisodes(episodeTuples: [EpisodeFeedTuple], to show:Show, context: NSManagedObjectContext) throws {
-        
-        var failedGuidList = [String]()
         
         for (_,episodePropertiesTuple) in episodeTuples.enumerated() {
             
@@ -155,21 +133,14 @@ class CoreDataStack {
             episode.pubDate = episodePropertiesTuple.pubDate as NSDate
             episode.fileSize = episodePropertiesTuple.fileSize
             episode.show = show
-            
-            // save context
-            do {
-                try context.save()
-            } catch {
-                failedGuidList.append(episodePropertiesTuple.guid)
-            }
         }
         
-        if failedGuidList.count > 0 {
-            let theError = CoreDataStack.error.executionError(guids: failedGuidList)
-            throw theError
+        // save context
+        do {
+            try context.save()
+        } catch {
+            throw error
         }
-        
-        context.reset()
         
     }
     
@@ -199,8 +170,6 @@ class CoreDataStack {
             return nil
         }
         
-        context.reset()
-        // do not reset context at this time
         return show
     }
     
