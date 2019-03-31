@@ -94,6 +94,29 @@ class ShowListViewController: UIViewController, UICollectionViewDataSource, UICo
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let episodeSet = self.shows[indexPath.item].episodes as? Set<Episode> {
+            
+            let episodeVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EpisodeTableViewController") as! EpisodeTableViewController
+            
+            episodeVC.episodes = Array(episodeSet).sorted { (lv, rv) -> Bool in
+                
+                let pubDateLv = (lv.pubDate as Date?) ?? Date()
+                let pubDateRv = (rv.pubDate as Date?) ?? Date()
+                
+                if pubDateLv.compare(pubDateRv) == .orderedAscending {
+                    return false
+                } else {
+                    return true
+                }
+            }
+            self.navigationController?.pushViewController(episodeVC, animated: true)
+        }
+        
+        
+    }
+    
     @IBAction func feedInstallerButtonTapped(_ sender: UIBarButtonItem) {
         popUpInstallFeedViewController()
     }

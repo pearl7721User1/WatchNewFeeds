@@ -105,6 +105,67 @@
             </objects>
             <point key="canvasLocation" x="3340" y="120.98950524737631"/>
         </scene>
+        <!--Episode Table View Controller-->
+        <scene sceneID="liN-1O-S50">
+            <objects>
+                <tableViewController storyboardIdentifier="EpisodeTableViewController" id="RGA-8M-wfT" customClass="EpisodeTableViewController" customModule="WatchNewFeeds" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZBV-st-O5e">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EpisodeCell" id="hG4-CG-32e" customClass="EpisodeCell" customModule="WatchNewFeeds" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hG4-CG-32e" id="Hxu-qT-0ck">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PubDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKL-8G-PVH">
+                                            <rect key="frame" x="16" y="11" width="48.5" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvX-EX-1n7">
+                                            <rect key="frame" x="16" y="30.5" width="30" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbc-jx-gUy">
+                                            <rect key="frame" x="16" y="53.5" width="35" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="jbc-jx-gUy" firstAttribute="leading" secondItem="Hxu-qT-0ck" secondAttribute="leading" constant="16" id="2Md-Ah-cj3"/>
+                                        <constraint firstItem="SKL-8G-PVH" firstAttribute="top" secondItem="Hxu-qT-0ck" secondAttribute="topMargin" id="IEB-UE-Sld"/>
+                                        <constraint firstItem="jbc-jx-gUy" firstAttribute="top" secondItem="UvX-EX-1n7" secondAttribute="bottom" constant="5" id="PMV-vP-Bkp"/>
+                                        <constraint firstItem="UvX-EX-1n7" firstAttribute="leading" secondItem="Hxu-qT-0ck" secondAttribute="leading" constant="16" id="gn0-xX-XEb"/>
+                                        <constraint firstItem="UvX-EX-1n7" firstAttribute="top" secondItem="SKL-8G-PVH" secondAttribute="bottom" constant="5" id="ll0-F4-LSU"/>
+                                        <constraint firstItem="SKL-8G-PVH" firstAttribute="leading" secondItem="Hxu-qT-0ck" secondAttribute="leadingMargin" id="u6E-Wp-SSt"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descLabel" destination="jbc-jx-gUy" id="HSG-tJ-cwG"/>
+                                    <outlet property="pubDateLabel" destination="SKL-8G-PVH" id="ahe-tW-Is9"/>
+                                    <outlet property="titleLabel" destination="UvX-EX-1n7" id="5DR-UO-y2u"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="RGA-8M-wfT" id="MWy-Uk-v0k"/>
+                            <outlet property="delegate" destination="RGA-8M-wfT" id="w9a-fE-5c0"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pvL-jM-fe1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4220" y="121"/>
+        </scene>
         <!--Install Base Feed View Controller-->
         <scene sceneID="e7B-9N-9hF">
             <objects>
