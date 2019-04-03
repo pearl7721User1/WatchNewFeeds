@@ -284,6 +284,11 @@
 					EE1FD15A21F2AE6200396729 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					EE91EB6921F365E800E12191 = {
 						CreatedOnToolsVersion = 9.1;

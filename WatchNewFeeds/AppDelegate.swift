@@ -14,18 +14,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var coreDataStack: CoreDataStack!
+    var syncManager: SyncManager!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         self.coreDataStack = CoreDataStack()
+        self.syncManager = SyncManager(coreDataStack: self.coreDataStack)
+        
         if let rootNavigationController = self.window?.rootViewController as? UINavigationController,
             let viewController = rootNavigationController.viewControllers[0] as? ShowListViewController {
             
             viewController.coreDataStack = self.coreDataStack
+            viewController.syncManager = self.syncManager
         }
         
+        UIApplication.shared.setMinimumBackgroundFetchInterval(3600)
+        
         return true
+    }
+    
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler:
+        @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        // TODO: - call SyncManager's sync function
+        /*
+        self.syncManager.sync()
+        
+        // Check for new data.
+        if let newData = fetchUpdates() {
+           addDataToFeed(newData: newData)
+            completionHandler(.newData)
+        }
+        completionHandler(.noData)
+        */
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -51,12 +51,12 @@ class FeedInstaller {
                     }
                     
                     completion(finished)
-            }            
+            }
         })
     }    
     
     static func sampleFeedUrls() -> [URL] {
-        let allEarsEnglish: URL = URL(string:"http:allearsenglish.libsyn.com/rss")!
+        let allEarsEnglish: URL = URL(string:"http://allearsenglish.libsyn.com/rss")!
         let englishWeSpeak: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02pc9zn.rss")!
         let globalNews: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02nq0gn.rss")!
         let bbcEnglishDrama: URL = URL(string:"https://podcasts.files.bbci.co.uk/p02pc9s1.rss")!

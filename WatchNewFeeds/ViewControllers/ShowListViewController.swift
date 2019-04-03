@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-
+import UserNotifications
 
 
 class ShowListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -16,6 +16,7 @@ class ShowListViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var collectionView: UICollectionView!
     let allShowsFetchRequest: NSFetchRequest<Show>
     var coreDataStack: CoreDataStack!
+    var syncManager: SyncManager!
     lazy var context: NSManagedObjectContext = {
        return coreDataStack.persistentContainer.viewContext
     }()
@@ -32,23 +33,39 @@ class ShowListViewController: UIViewController, UICollectionViewDataSource, UICo
         self.shows = coreDataStack.fetchAllShows(context: context)
         
         NotificationCenter.default.addObserver(self, selector: #selector(contextObjectsDidChange), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: nil)
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
+            (granted, error) in
+            // do nothing
+        }
     }
     
     @objc func contextObjectsDidChange(notification:Notification) {
+        
+        print("contextObjectsDidChange called")
         
         let listUpdateHelper = ShowListViewUpdateHelper()
         if let viewUpdateInfo = listUpdateHelper.showListViewUpdateInfo(notification: notification, shows: self.shows) {
             
             self.shows = viewUpdateInfo.newShows
             
+            
+            
             DispatchQueue.main.async {
                 if let insertRequired = viewUpdateInfo.insertRequired {
+                    
+                    print("insertRequired shows:\(insertRequired.count)")
+                    
                     self.collectionView.insertItems(at: insertRequired)
                 }
                 if let updateRequired = viewUpdateInfo.updateRequired {
+                    
+                    print("upateRequired shows:\(updateRequired.count)")
                     self.collectionView.reloadItems(at: updateRequired)
                 }
                 if let deleteRequired = viewUpdateInfo.deleteRequired {
+                    
+                    print("deleteRequired shows:\(deleteRequired.count)")
                     self.collectionView.deleteItems(at: deleteRequired)
                 }
             }
@@ -122,7 +139,7 @@ class ShowListViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     @IBAction func syncButtonTapped(_ sender: UIBarButtonItem) {
-        
+        self.syncManager.sync()
     }
 }
 

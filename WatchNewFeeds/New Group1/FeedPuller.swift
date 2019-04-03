@@ -32,6 +32,11 @@ class FeedPuller: NSObject, FeedPullable {
                 if (change.newValue == 0) {
                     
                     let results = self.feedPullOperations.map{FeedPullResult(show: $0.showTuple, episodes: $0.episodeTuples)}
+                    
+                    for result in results {
+                        print("FeedPuller is pulling \(result.show?.title) with \(result.episodes.count) episodes")
+                    }
+                    
                     completion(results)
                 }
         })

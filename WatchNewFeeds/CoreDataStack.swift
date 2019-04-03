@@ -34,33 +34,17 @@ class CoreDataStack {
         return storedEpisodes!
     }
     
-    func deleteEpisodes(guidArray: [String], context: NSManagedObjectContext) throws {
+    func delete(episodes: [Episode], guidArray: [String], context: NSManagedObjectContext) throws {
         
         var deletedObjectIds = [NSManagedObjectID]()
-        context.performAndWait {
-            
-            for (_,guid) in guidArray.enumerated() {
-                
-                let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest(guid: guid)
-                var mightBeEpisode: Episode?
-                do {
-                    let fetchResult = try context.fetch(fetchRequest)
-                    mightBeEpisode = fetchResult.first
-                } catch {
-                    continue
-                }
-                
-                guard let episodeOfInterest = mightBeEpisode else {
-                    continue
-                }
-                
-                context.delete(episodeOfInterest)
-                deletedObjectIds.append(episodeOfInterest.objectID)
-                
-            }
-            
-        }
         
+        for episode in episodes {
+            if guidArray.contains(episode.guid ?? "") {
+                context.delete(episode)
+                deletedObjectIds.append(episode.objectID)
+            }
+        }
+
         // save context
         do {
             try context.save()
@@ -70,40 +54,24 @@ class CoreDataStack {
         
         // notify changes
         NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey:deletedObjectIds], into: [self.persistentContainer.viewContext])
-        
     }
     
-    func updateEpisodes(episodeTuples: [EpisodeFeedTuple], context: NSManagedObjectContext) throws {
-        
+    func update(episodes: [Episode], episodeTuples: [EpisodeFeedTuple], context: NSManagedObjectContext) throws {
         
         var updatedObjectIds = [NSManagedObjectID]()
-        
-        context.performAndWait {
+        for episode in episodes {
             
-            for (_,episodePropertiesTuple) in episodeTuples.enumerated() {
+            let updatePair = episodeTuples.filter{$0.guid == (episode.guid ?? "")}
+            
+            if let updatePair = updatePair.first {
+                episode.desc = updatePair.desc
+                episode.fileSize = updatePair.fileSize
+                episode.link = updatePair.link
+                episode.pubDate = updatePair.pubDate as NSDate
+                episode.title = updatePair.title
                 
-                let fetchRequest: NSFetchRequest<Episode> = Episode.fetchRequest(guid: episodePropertiesTuple.guid)
-                var mightBeEpisode: Episode?
-                do {
-                    let fetchResult = try context.fetch(fetchRequest)
-                    mightBeEpisode = fetchResult.first
-                } catch {
-                    continue
-                }
-                
-                guard let episodeOfInterest = mightBeEpisode else {
-                    continue
-                }
-                
-                episodeOfInterest.desc = episodePropertiesTuple.desc
-                episodeOfInterest.fileSize = episodePropertiesTuple.fileSize
-                episodeOfInterest.link = episodePropertiesTuple.link
-                episodeOfInterest.pubDate = episodePropertiesTuple.pubDate as NSDate
-                episodeOfInterest.title = episodePropertiesTuple.title
-                
-                updatedObjectIds.append(episodeOfInterest.objectID)
+                updatedObjectIds.append(episode.objectID)
             }
-            
         }
         
         // save context
@@ -115,7 +83,6 @@ class CoreDataStack {
         
         // notify changes
         NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSUpdatedObjectsKey:updatedObjectIds],into: [self.persistentContainer.viewContext])
-        
         
     }
     

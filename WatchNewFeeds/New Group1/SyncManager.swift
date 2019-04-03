@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class SyncManager {
 
@@ -39,6 +40,8 @@ class SyncManager {
                     
                     let comparatorResult = self.episodeComparator.compare(episodes: Array(episodes), episodeTuples: firstPullResult.episodes)
                     
+                    print("\(firstPullResult.show?.title) for downloading \(comparatorResult.insertRequired.count) episodes out of \(episodes.count)")
+                    
                     self.handle(result: comparatorResult, show: installedShow)
                 }
             }
@@ -58,24 +61,39 @@ class SyncManager {
     
     private func handle(result: EpisodeComparatorResult, show: Show) {
         
-        try? self.coreDataStack.deleteEpisodes(guidArray: result.deleteRequired, context: self.context)
-        try? self.coreDataStack.updateEpisodes(episodeTuples: result.updateRequired, context: self.context)
-        try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, to: show, context: self.context)
-    }
-    
-    private func invalidRssFeedUrls(from shows:[Show]) -> [String] {
-        
-        var urlStrings = [String]()
-        for (_,v) in shows.enumerated() {
+        // TODO: - show<NSSet> to [Show] function needed
+        if let episodes = show.episodes as? Set<Episode> {
             
-            guard let rssFeedUrlString = v.rssFeedUrl,
-                let _ = URL(string: rssFeedUrlString) else {
-                    
-                urlStrings.append(v.rssFeedUrl ?? "")
-                continue
+//            try? self.coreDataStack.delete(episodes: Array(episodes), guidArray: result.deleteRequired, context: self.context)
+            
+//            try? self.coreDataStack.update(episodes: Array(episodes), episodeTuples: result.updateRequired, context: self.context)
+            
+            if let _ = try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, to: show, context: self.context) {
+                
+                // send local notification
+                let center =  UNUserNotificationCenter.current()
+                let request = SyncManager.localNotificationRequest(updatedShowTitle: show.title ?? "", amongUpdatedEpisodesTitle: result.insertRequired.first?.title ?? "")
+                center.add(request, withCompletionHandler: nil)
             }
         }
-        return urlStrings
+        
     }
     
+    static func localNotificationRequest(updatedShowTitle: String, amongUpdatedEpisodesTitle: String) -> UNNotificationRequest {
+        
+        //create the content for the notification
+        let content = UNMutableNotificationContent()
+        content.title = "Episode Updates"
+        content.subtitle = updatedShowTitle
+        content.body = "\(amongUpdatedEpisodesTitle) is now available."
+        content.sound = UNNotificationSound.default()
+        
+        //notification trigger can be based on time, calendar or location
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval:2.0, repeats: false)
+        
+        //create request to display
+        let request = UNNotificationRequest(identifier: "ContentIdentifier", content: content, trigger: trigger)
+        
+        return request
+    }
 }
