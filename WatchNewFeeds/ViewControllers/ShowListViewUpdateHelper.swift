@@ -28,8 +28,11 @@ class ShowListViewUpdateHelper: NSObject {
         
         if let insertedSet = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
 
+            print("insertedSet element count: \(insertedSet.count)")
+            
             let insertNeededShows = Array(insertedSet).filter{$0.isKind(of: Show.self)} as! [Show]
             
+            print("insertNeededShows count: \(insertNeededShows.count)")
                 // TODO: - doesn't need to be permanent at this point?
 //            let insertNeeded = Array(insertedSet).filter{$0.objectID.isTemporaryID == false}
             
@@ -46,8 +49,12 @@ class ShowListViewUpdateHelper: NSObject {
             return ShowListViewUpdateInfo(insertRequired: insertedIndexPaths, updateRequired:nil, deleteRequired: nil, newShows: newShows)
         } else if let updatedSet = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
             
+            print("updatedSet element count: \(updatedSet.count)")
+            
 //            let mightBeUpdated = Array(updatedSet).filter{$0.objectID.isTemporaryID == false}
             let mightBeUpdated = Array(updatedSet).filter{$0.isKind(of: Show.self)} as! [Show]
+            
+            print("mightBeUpdated shows count: \(mightBeUpdated.count)")
             
             var updateNeededIndexPaths = [IndexPath]()
             let section = 0
@@ -72,8 +79,13 @@ class ShowListViewUpdateHelper: NSObject {
             
         } else if let deletedSet = userInfo[NSDeletedObjectsKey] as? Set<Show> {
             
+            print("deletedSet element count: \(deletedSet.count)")
+            
 //            let mightBeDeleted = Array(deletedSet).filter{$0.objectID.isTemporaryID == false}
             let mightBeDeleted = Array(deletedSet).filter{$0.isKind(of: Show.self)} as! [Show]
+            
+            print("mightBeDeleted shows count: \(mightBeDeleted.count)")
+            
             var deletedNeededIndexes = [Int]()
             
             for (i,v) in shows.enumerated() {

@@ -139,7 +139,7 @@ class ShowListViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     @IBAction func syncButtonTapped(_ sender: UIBarButtonItem) {
-        self.syncManager.sync()
+        self.syncManager.sync(completion: nil)
     }
 }
 

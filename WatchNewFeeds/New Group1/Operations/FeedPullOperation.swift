@@ -13,11 +13,13 @@ class FeedPullOperation: Operation {
 
     var showTuple: ShowFeedTuple?
     var episodeTuples = [EpisodeFeedTuple]()
+    let feedUrl: URL
     private var parser: FeedParser
     
     init(feedUrl: URL) {
         
         self.parser = FeedParser(URL: feedUrl)
+        self.feedUrl = feedUrl
     }
     
     // MARK: CunCurrency

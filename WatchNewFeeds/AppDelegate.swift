@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,16 +40,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         @escaping (UIBackgroundFetchResult) -> Void) {
         
         // TODO: - call SyncManager's sync function
-        /*
-        self.syncManager.sync()
         
-        // Check for new data.
-        if let newData = fetchUpdates() {
-           addDataToFeed(newData: newData)
-            completionHandler(.newData)
+        self.syncManager.sync { (request: UNNotificationRequest?) in
+            
+            if let request = request {
+                let center = UNUserNotificationCenter.current()
+                center.add(request, withCompletionHandler: nil)
+                completionHandler(.newData)
+            } else {
+                completionHandler(.noData)
+            }
+            
         }
-        completionHandler(.noData)
-        */
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

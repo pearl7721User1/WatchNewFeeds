@@ -16,50 +16,60 @@ class SyncManager {
     private var coreDataStack: CoreDataStack
     private var context: NSManagedObjectContext
     
-//    var feedPuller: FeedPuller?
+    var feedPuller: FeedPullable?
     var episodeComparator = EpisodeComparator()
     
-    init(coreDataStack: CoreDataStack) {
+    init(coreDataStack: CoreDataStack, feedPuller: FeedPullable? = nil) {
         
         self.coreDataStack = coreDataStack
         self.context = coreDataStack.persistentContainer.newBackgroundContext()
+        self.feedPuller = feedPuller
     }
     
-    func sync() {
+    func sync(completion: ((_ localNotificationRequest: UNNotificationRequest?) -> Void)?) {
         // fetch all shows
         let installedShows = self.coreDataStack.fetchAllShows(context: context)
         
-        for (_, installedShow) in installedShows.enumerated() {
+        let rssFeedUrlStrings = installedShows.compactMap{$0.rssFeedUrl}
+        let rssFeedUrls = rssFeedUrlStrings.compactMap{URL(string:$0)}
+        
+        if (feedPuller == nil) {
+            feedPuller = FeedPuller(feedUrls: rssFeedUrls)
+        }
+        
+        feedPuller!.pull { (feedPullResults: [FeedPullResult]) in
             
-            sync(for: installedShow) { (feedPullResults: [FeedPullResult]?) in
+            for feedPullResult in feedPullResults {
                 
-                if let feedPullResults = feedPullResults,
-                    let firstPullResult = feedPullResults.first,
-                    let _ = firstPullResult.show,
-                    let episodes = installedShow.episodes as? Set<Episode> {
+                if let _ = feedPullResult.show,
+                    let equalShowFromInstalled = self.show(from: installedShows, OfRssFeedUrl: feedPullResult.feedRssUrl.absoluteString),
+                    let installedEpisodes = equalShowFromInstalled.episodes as? Set<Episode> {
                     
-                    let comparatorResult = self.episodeComparator.compare(episodes: Array(episodes), episodeTuples: firstPullResult.episodes)
+                    let pulledEpisodes = feedPullResult.episodes
                     
-                    print("\(firstPullResult.show?.title) for downloading \(comparatorResult.insertRequired.count) episodes out of \(episodes.count)")
+                    let comparatorResult = self.episodeComparator.compare(episodes: Array(installedEpisodes), episodeTuples: pulledEpisodes)
                     
-                    self.handle(result: comparatorResult, show: installedShow)
+                    print("\(equalShowFromInstalled.title) has pulled \(pulledEpisodes.count) episodes and is going to install \(comparatorResult.insertRequired.count)")
+                    
+                    let mightBeNotificationRequest = self.handle(result: comparatorResult, show: equalShowFromInstalled)
+                    
+                    if let completion = completion {
+                        completion(mightBeNotificationRequest)
+                    }                    
                 }
+                
             }
         }
         
     }
     
-    private func sync(for show:Show, completion: @escaping ((_ feedPullResult: [FeedPullResult]?) -> Void)) {
+    private func show(from shows:[Show], OfRssFeedUrl rssFeedUrl: String) -> Show? {
         
-        if let rssFeedUrl = URL(string:show.rssFeedUrl ?? "") {
-            let feedPuller = FeedPuller(feedUrls: [rssFeedUrl])
-            feedPuller.pull(completion: completion)
-        } else {
-            completion(nil)
-        }
+        let show = shows.first(where: {$0.rssFeedUrl == rssFeedUrl})
+        return show
     }
     
-    private func handle(result: EpisodeComparatorResult, show: Show) {
+    private func handle(result: EpisodeComparatorResult, show: Show) -> UNNotificationRequest? {
         
         // TODO: - show<NSSet> to [Show] function needed
         if let episodes = show.episodes as? Set<Episode> {
@@ -71,12 +81,14 @@ class SyncManager {
             if let _ = try? self.coreDataStack.insertEpisodes(episodeTuples: result.insertRequired, to: show, context: self.context) {
                 
                 // send local notification
-                let center =  UNUserNotificationCenter.current()
+                
                 let request = SyncManager.localNotificationRequest(updatedShowTitle: show.title ?? "", amongUpdatedEpisodesTitle: result.insertRequired.first?.title ?? "")
-                center.add(request, withCompletionHandler: nil)
+                return request
+                
             }
         }
         
+        return nil
     }
     
     static func localNotificationRequest(updatedShowTitle: String, amongUpdatedEpisodesTitle: String) -> UNNotificationRequest {
