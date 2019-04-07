@@ -10,6 +10,21 @@ This is a simple rss feed managing app. You can install a couple of rss feeds in
 
 One thing noticeable about this app is that most proportion of what is implemented is working under the hood. Feed pulling, figuring out the right insert/update/delete-required-contents, having all the updates persist in the Core Data, and so on. So, it’s paramount to build in a way that the app is completely testable to ensure integrity. (Actually, I hope to speak for all the other apps that I’m going to create.)
 
+## Screenshots as in Apr.7.2019
+<p>
+<img src="https://user-images.githubusercontent.com/18760280/55679392-005a2000-5946-11e9-8d4b-95ee44509cb4.png" width=300 height=533.6>
+<img src="https://user-images.githubusercontent.com/18760280/55679393-005a2000-5946-11e9-8d3b-e660846ca50a.png" width=300 height=533.6>
+<img src="https://user-images.githubusercontent.com/18760280/55679391-ffc18980-5945-11e9-85ff-5227b82eb594.png" width=300 height=533.6>
+</p>
+
+<p align="center">
+
+</p>
+
+<p align="center">
+
+</p>
+
 ## Problems that I encountered along the way:
 1. What makes it stand out for not using CoreData FetchController but suit the fetching needs on my own?
 2. What is involved if you want any changes in Core Data resulting in inserting/deleting/reloading UITableview cell?
